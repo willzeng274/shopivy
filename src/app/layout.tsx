@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 // import { Inter } from "next/font/google";
 import "./globals.css";
+import "./animations.css";
 import StoreInitializer from "@/utils/initStore";
 import { cookies } from "next/headers";
 

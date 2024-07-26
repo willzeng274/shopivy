@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+  height: 100%;
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -30,4 +34,8 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.bg-gradient-home {
+  background-image: linear-gradient(-45deg, #7A6BE9, #9993E9, #91B7F0, #80C2E9, #95FAD5);
 }

@@ -1,8 +1,12 @@
-import Image from "next/image";
+// import Image from "next/image";
 import Link from "next/link";
 import { Luckiest_Guy } from "next/font/google";
 import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
+import ShimmerButton from "@/components/ui/ShimmerButton";
+import Phone from "@/components/ui/Phone";
+import Screen from "@/components/ui/Screen";
+import { AIBeam } from "@/components/ui/AIBeam";
 
 const font_luck = Luckiest_Guy({
 	weight: "400",
@@ -14,14 +18,16 @@ const font_luck = Luckiest_Guy({
 export default async function Home() {
 	return (
 		<div className="flex flex-col min-h-[100dvh]">
-			<main className="flex-1">
+			<div className="flex flex-col h-[calc(100dvh+2.5em)]">
 				<Header />
 				{/* bg-gradient-to-br from-[#6366f1] to-[#9333ea] */}
-				<section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-[#6c5ce7] to-[#a29bfe] text-white">
-					<div className="container px-8 md:px-12 grid gap-8 lg:grid-cols-2 lg:gap-16">
+				{/* bg-gradient-to-br from-[#6c5ce7] via-[#76b9f7] to-[#a29bfe]*/}
+				{/* #ee7752, #e73c7e, #23a6d5, #23d5ab */}
+				<section className="flex flex-grow min-h-0 items-center justify-center w-full bg-[length:400%_400%] bg-gradient-home text-white animate-gradient">
+					<div className="flex flex-col md:flex-row w-full py-4 px-4 gap-10 lg:gap-40 md:px-8 lg:px-12 overflow-x-clip">
 						<div className="flex flex-col justify-center space-y-4">
 							<div className="space-y-2">
-								<h1 className={"text-9xl font-bold tracking-tighter " + font_luck.className}>ShopIvy</h1>
+								<h1 className={"text-7xl sm:text-9xl font-bold tracking-tighter " + font_luck.className}>ShopIvy</h1>
 								<p className="max-w-[600px] text-gray-200 md:text-xl">
 									The destination for students to find school-related products and services.
 								</p>
@@ -29,32 +35,39 @@ export default async function Home() {
 							<div className="flex flex-col gap-2 min-[400px]:flex-row">
 								<Link
 									href="#"
-									className="inline-flex h-10 items-center justify-center rounded-md bg-white text-[#6366f1] px-8 text-sm font-medium shadow transition-colors hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+									className="inline-flex h-10 items-center justify-center"
 									prefetch={false}
 								>
-									Shop Now
+									<ShimmerButton
+										shimmerColor="#6366f1"
+										background="white"
+										hoverBackground="rgb(229,231,235)"
+										borderRadius="0.375rem"
+										shimmerSize="0.1em"
+										className="px-8 w-full h-full text-[#6366f1] text-sm font-medium shadow transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+									>
+										Shop Now
+									</ShimmerButton>
 								</Link>
 								<Link
 									href="#"
 									className="inline-flex h-10 items-center justify-center rounded-md border border-white bg-transparent px-8 text-sm font-medium shadow-sm transition-colors hover:bg-white hover:text-[#6366f1] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
 									prefetch={false}
 								>
-									Learn More
+									<button>Learn More</button>
 								</Link>
 							</div>
 						</div>
-						<div className="flex justify-center">
-							<Image
-								src="/placeholder.svg"
-								width="400"
-								height="400"
-								alt="Hero Product"
-								className="mx-auto aspect-square overflow-hidden rounded-xl object-cover"
-							/>
+						<div className="flex flex-1 items-center justify-center my-4">
+							<Phone />
+							<Screen />
 						</div>
 					</div>
 				</section>
-				<section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-[#ffeaa7] to-[#fdcb6e]">
+			</div>
+			<main className="flex flex-col flex-1">
+				<div className="absolute -translate-y-10 w-full h-10 bg-gradient-to-r from-[#ffeaa7] to-[#fdcb6e] rounded-[28%_72%_0%_100%_/_100%_66%_34%_0%]" />
+				<section className="flex justify-center w-full py-6 md:py-12 lg:py-16 bg-gradient-to-r from-[#ffeaa7] to-[#fdcb6e]">
 					<div className="container px-4 md:px-6">
 						<div className="flex flex-col items-center justify-center space-y-4 text-center">
 							<div className="space-y-2">
@@ -65,18 +78,19 @@ export default async function Home() {
 									Personalized Order Management Just For You
 								</h2>
 								<p className="max-w-[900px] text-[#2d3436] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-									ShopIvy's ahead in the AI game to provide you a personalized order management system.
+									ShopIvy is ahead in the AI game to provide you a personalized order management system.
 								</p>
 							</div>
 						</div>
 						<div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
-							<img
+							<AIBeam className="mx-auto rounded-xl sm:w-full lg:order-last" />
+							{/* <img
 								src="/placeholder.svg"
 								width="550"
 								height="310"
 								alt="Feature Image"
 								className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
-							/>
+							/> */}
 							<div className="flex flex-col justify-center space-y-4">
 								<ul className="grid gap-6">
 									<li>
@@ -108,13 +122,16 @@ export default async function Home() {
 						</div>
 					</div>
 				</section>
-				<section className="w-full pt-12 pb-8 md:pt-24 md:pb-16 lg:pt-32 lg:pb-24 bg-gradient-to-br from-[#6366f1] to-[#9333ea] text-white">
-					<div className="container px-8 md:px-12 grid gap-8 lg:grid-cols-2 lg:gap-16">
-						<div className="flex flex-col justify-center space-y-4">
+				<div>
+					<div className="absolute w-full h-10 bg-gradient-to-r from-[#ffeaa7] to-[#fdcb6e] rounded-[0%_100%_24%_76%_/_46%_0%_100%_54%]" />
+				</div>
+				<section className="flex justify-center w-full pt-20 pb-10 md:pt-32 md:pb-16 lg:pt-36 lg:pb-24 bg-gradient-to-br from-[#6366f1] to-[#9333ea] text-white">
+					<div className="container px-8 md:px-12">
+						<div className="flex flex-col justify-center space-y-8">
 							<div className="space-y-2">
-								<h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Product and Service</h2>
-								<p className="max-w-[600px] text-gray-200 md:text-xl">
-									We offer tech, supplies, textbooks, and other student services such as ....
+								<h2 className="text-center text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Product and Service</h2>
+								<p className="text-center text-gray-200 md:text-xl">
+									We offer tech, supplies, textbooks, and other student services such as tutoring, proofreading, etc.
 								</p>
 							</div>
 							<div className="grid grid-cols-2 gap-4">
@@ -168,7 +185,7 @@ export default async function Home() {
 								</Link>
 							</div>
 						</div>
-						<div className="flex justify-center">
+						{/* <div className="flex justify-center">
 							<Image
 								src="/"
 								width="400"
@@ -176,7 +193,7 @@ export default async function Home() {
 								alt="Product"
 								className="mx-auto aspect-square overflow-hidden rounded-xl object-cover"
 							/>
-						</div>
+						</div> */}
 					</div>
 				</section>
 			</main>
