@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuthStore } from "@/utils/stores/authStore";
+import NProgress from "nprogress";
 
 export default function Form({
 	action,
@@ -13,6 +14,7 @@ export default function Form({
 	return (
 		<form action={async function(frm) {
             logout();
+			NProgress.start();
             await action(frm);
         }} {...props}>
 			{children}
