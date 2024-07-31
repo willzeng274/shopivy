@@ -2,6 +2,7 @@
 
 import { useAuthStore } from "@/utils/stores/authStore";
 import { User } from "@prisma/client";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useFormState } from "react-dom";
 import toast from "react-hot-toast";
@@ -25,6 +26,7 @@ export default function Form({
 }) {
 	const [state, formAction] = useFormState(action, initialState);
 	const login = useAuthStore((state) => state.login);
+	const router = useRouter();
 
 	useEffect(() => {
         if (state && state.errors) {
@@ -36,6 +38,7 @@ export default function Form({
         }
 		if (state && state.data) {
 			login(state.data);
+			router.push('/profile');
 		}
 	}, [state]);
 
