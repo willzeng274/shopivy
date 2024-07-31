@@ -1,25 +1,59 @@
+import { User } from '@prisma/client';
 import { create } from 'zustand';
-import { devtools, persist } from 'zustand/middleware';
+import { devtools, persist, PersistStorage } from 'zustand/middleware';
+
+type UserClient = Omit<User, 'password'>;
 
 export interface AuthState {
-    session: string | null;
+    user: UserClient | null;
 }
 
 export interface AuthActions {
-    login: (sess: string) => void;
+    login: (user: UserClient) => void;
+    logout: () => void;
 }
 
-export type AuthStore = AuthState & AuthActions;
+export type AuthStore = AuthState & Readonly<AuthActions>;
+
+const customJSONStorage: PersistStorage<AuthStore> = {
+    getItem: (name) => {
+        const str = localStorage.getItem(name);
+        if (!str) return null;
+        return JSON.parse(str, (_k, v) => {
+            if (v && typeof v === 'object' && v.hasOwnProperty('_bigint_')) {
+                return BigInt(v['_bigint_']);
+            }
+            return v;
+        });
+    },
+    setItem: (name, value) => {
+        localStorage.setItem(name, JSON.stringify(value, (_k, v) => {
+            if (typeof v === 'bigint') {
+                return {
+                    '_bigint_': v.toString()
+                };
+            }
+            return v;
+        }));
+    },
+    removeItem: (name) => localStorage.removeItem(name),
+};
+
+const dummyStorage: PersistStorage<AuthStore> = {
+    getItem: () => null,
+    setItem: () => { },
+    removeItem: () => { }
+};
 
 export const useAuthStore = create<AuthStore>()(
     devtools(
         persist(
             (set) => ({
-                session: null,
-                login: (sess) => set(() => ({ session: sess })),
-                //   increase: (by) => set((state) => ({ bears: state.bears + by })),
+                user: null,
+                login: (user) => set(() => ({ user })),
+                logout: () => set(() => ({ user: null })),
             }),
-            { name: 'authStore' },
+            { name: 'authStore', storage: typeof localStorage !== 'undefined' ? customJSONStorage : dummyStorage },
         )
     )
 );

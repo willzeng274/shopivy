@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 // import { Inter } from "next/font/google";
 import "./globals.css";
 import "./animations.css";
-import StoreInitializer from "@/utils/initStore";
-import { cookies } from "next/headers";
+// import ClientTest from "@/components/ClientTest";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -17,17 +16,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = cookies();
-
-  const session = cookieStore.get("session");
 
   return (
     <html lang="en">
       <link rel="icon" href="/logo.svg" sizes="any" />
       <body>
-        <StoreInitializer session={session?.value || null}>
-          {children}
-        </StoreInitializer>
+        {/* <ClientTest /> */}
+        {children}
       </body>
     </html>
   );

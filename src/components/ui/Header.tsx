@@ -11,24 +11,24 @@ const font_cookie = Cookie({
 });
 
 const links = [
-    { href: "/", label: "Home", validateSession: null },
+    // { href: "/", label: "Home", validateSession: null },
 	{ href: "/about", label: "About", validateSession: null },
-	{ href: "/login", label: "Login", validateSession: true },
-	{ href: "/signup", label: "Signup", validateSession: true },
-	{ href: "/shop", label: "Shopping Cart", validateSession: false },
+	{ href: "/auth/login", label: "Login", validateSession: true },
+	{ href: "/auth/signup", label: "Signup", validateSession: true },
+	{ href: "/shop", label: "Cart", validateSession: false },
 	{ href: "/profile", label: "Profile", validateSession: false },
 ];
 
 export default function Header() {
 	const cookieStore = cookies();
-	const session = cookieStore.get("session");
+	const session = cookieStore.get("ivysess");
 
     const headersList = headers();
     const url = headersList.get('x-current-path');
 
 	return (
-		<header className="px-4 lg:px-6 h-14 py-2 flex items-center bg-gray-800/90 text-white">
-			<Link href="#" className="flex items-center justify-center" prefetch={false}>
+		<header className="absolute w-full px-4 lg:px-6 h-14 py-2 flex items-center bg-transparent text-black">
+			<Link href="/" className="flex items-center justify-center" prefetch={false}>
 				<ShopIvyIcon className="h-10 w-10" />
                 <span className={"ml-2 font-bold text-xl " + font_cookie.className}>ShopIvy</span>
 				<span className="sr-only">shopivy</span>
@@ -50,3 +50,5 @@ export default function Header() {
 		</header>
 	);
 }
+
+// const pathname = usePathname()
