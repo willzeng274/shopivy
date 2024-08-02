@@ -8,24 +8,25 @@ import NextTopLoader from "nextjs-toploader";
 // const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "ShopIvy",
-  description: "The shop for students",
+	title: "ShopIvy",
+	description: "The shop for students",
 };
 
 export default function RootLayout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-
-  return (
-    <html lang="en">
-      <link rel="icon" href="/logo.svg" sizes="any" />
-      <body>
-        <NextTopLoader />
-        {/* <ClientTest /> */}
-        {children}
-      </body>
-    </html>
-  );
+	return (
+		<html lang="en">
+			<head>
+				<link rel="icon" href="/favicon.ico" sizes="any" />
+			</head>
+			<body>
+				<NextTopLoader />
+				{/* <ClientTest /> */}
+				{children}
+			</body>
+		</html>
+	);
 }

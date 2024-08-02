@@ -14,10 +14,11 @@ datasource db {
 }
 
 model User {
-  id       BigInt @id @default(autoincrement())
-  email    String @unique @db.String(255)
-  name     String @db.String(255)
-  password String @db.String
+  id       BigInt  @id @default(autoincrement())
+  email    String  @unique @db.String(255)
+  name     String  @db.String(255)
+  password String  @db.String
+  code     String? @db.String(6)
 
   cartItems CartItem[]
   sessions  Session[]

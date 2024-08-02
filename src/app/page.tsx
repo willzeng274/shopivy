@@ -15,6 +15,8 @@ const font_luck = Luckiest_Guy({
 	preload: true,
 });
 
+export const runtime = "edge";
+
 export default async function Home() {
 	return (
 		<div className="flex flex-col min-h-[100dvh]">

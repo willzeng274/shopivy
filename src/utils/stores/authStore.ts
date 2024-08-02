@@ -2,7 +2,7 @@ import { User } from '@prisma/client';
 import { create } from 'zustand';
 import { devtools, persist, PersistStorage } from 'zustand/middleware';
 
-type UserClient = Omit<User, 'password'>;
+type UserClient = Omit<User, 'password' | 'code'> & { verified: boolean };
 
 export interface AuthState {
     user: UserClient | null;
@@ -11,6 +11,7 @@ export interface AuthState {
 export interface AuthActions {
     login: (user: UserClient) => void;
     logout: () => void;
+    verify: () => void;
 }
 
 export type AuthStore = AuthState & Readonly<AuthActions>;
@@ -52,6 +53,12 @@ export const useAuthStore = create<AuthStore>()(
                 user: null,
                 login: (user) => set(() => ({ user })),
                 logout: () => set(() => ({ user: null })),
+                verify: () => set((state) => ({
+                    user: state.user === null ? null : {
+                        ...state.user,
+                        verified: true
+                    }
+                })),
             }),
             { name: 'authStore', storage: typeof localStorage !== 'undefined' ? customJSONStorage : dummyStorage },
         )

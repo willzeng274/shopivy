@@ -1,3 +1,4 @@
+import ShopIvyIcon from "@/components/icons/ShopIvy";
 import { cn } from "@/utils/cn";
 import { Inter } from "next/font/google";
 
@@ -49,46 +50,24 @@ const facts: string[] = [
 	'12+1 = 11+2, and "twelve plus one" is an anagram of "eleven plus two."',
 ];
 
-const fact = facts[Math.floor(Math.random() * facts.length)];
-
 export default function LoadUI() {
 	return (
 		<div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-[#6FCF97] to-[#66D2EA]">
 			<div className="flex flex-col items-center justify-center space-y-8">
 				<div className="flex items-center justify-center w-24 h-24 bg-white rounded-full shadow-lg animate-pulse">
-					<LeafIcon className="w-12 h-12 text-[#6FCF97]" />
+					<ShopIvyIcon className="w-12 h-12 text-[#6FCF97]" />
 				</div>
 				<div className="text-center">
 					<h1 className="text-3xl font-bold text-white after:animate-ellipsis">Loading shopivy</h1>
 				</div>
 				<div className={cn("w-full max-w-md text-center text-white", inter.className)}>
 					<h2 className="font-bold text-[#207D88]">DID YOU KNOW</h2>
-					<p className="mt-4 text-sm">{fact}</p>
+					<p className="mt-4 text-sm">{facts[Math.floor(Math.random() * facts.length)]}</p>
 					{/* <div className="h-2 bg-white rounded-full overflow-hidden">
 						<div className="h-full bg-gradient-to-r from-[#6FCF97] to-[#66D2EA] animate-loading-bar" />
 					</div> */}
 				</div>
 			</div>
 		</div>
-	);
-}
-
-function LeafIcon(props: React.HTMLAttributes<SVGElement>) {
-	return (
-		<svg
-			{...props}
-			xmlns="http://www.w3.org/2000/svg"
-			width="24"
-			height="24"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			strokeWidth="2"
-			strokeLinecap="round"
-			strokeLinejoin="round"
-		>
-			<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
-			<path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
-		</svg>
 	);
 }

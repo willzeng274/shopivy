@@ -20,7 +20,7 @@ export default async function Login() {
 			<h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">Welcome back!</h2>
 			<p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">Let's continue your 4.1 GPA streak 🔥</p>
 
-			<Form className="mt-8 mb-4" action={handleLogin}>
+			<Form className="mt-8 mb-4" action={handleLogin} autoComplete="off">
 				<LabelInputContainer className="mb-4">
 					<label htmlFor="email">Email Address</label>
 					<Input id="email" name="email" placeholder="hire.talent@uwaterloo.ca" type="email" autoComplete="one-time-code" />

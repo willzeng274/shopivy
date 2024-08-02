@@ -1,6 +1,7 @@
 import { cn } from "@/utils/cn";
 import { Inter } from "next/font/google";
 import ShoppingCartIcon from "../icons/ShoppingCartIcon";
+import Image from "next/image";
 
 const inter = Inter({
     weight: "400",
@@ -81,7 +82,16 @@ export default function Screen({ className, children }: ScreenProps) {
 				<div className="w-2/3 h-full [&>*]:border-t [&>*]:border-t-gray-400 [&>:last-child]:border-b [&>:last-child]:border-b-gray-400 p-2 mx-2 overflow-y-auto text-black bg-white/40 rounded-lg">
 					{cartItems.map((item) => (
 						<div className={cn("w-full flex flex-row gap-2 py-2", inter.className)} key={item.id}>
-							<img className="w-20 p-1 h-auto aspect-square self-center rounded-md" src={item.imageUrl} alt="product image" />
+							<Image
+								className="w-20 p-1 h-auto aspect-square self-center rounded-md"
+								width={80}
+								height={80}
+								src={item.imageUrl}
+								alt="product-image"
+								blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAACCAYAAAB/qH1jAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAJ0lEQVR4nGPY2fXjv458/H9Bbtf/IDbD/7v//8/Mvfq/J+nEfxAbAF3NFsFiuaE1AAAAAElFTkSuQmCC"
+								placeholder="blur"
+							/>
+							{/* <img className="w-20 p-1 h-auto aspect-square self-center rounded-md" src={item.imageUrl} alt="product image" /> */}
 							<div className="flex flex-col gap-1">
 								<h1 className="text-xs">{item.name}</h1>
 								<div className="flex flex-row divide-x divide-gray-400 [&>:first-child]:pr-1 [&>:not(:first-child)]:px-1">

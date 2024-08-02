@@ -67,7 +67,9 @@ export default function Phone({ className, children }: PhoneProps) {
 			)}
 		>
 			<div className="flex flex-row w-full items-center px-2">
-				<ShopIvyIcon className="h-4 w-4" />
+				<div className="flex items-center justify-center w-4 h-4 shadow-lg">
+					<ShopIvyIcon className="w-4 h-4 text-[#6FCF97]" />
+				</div>
 				<h1 className={cn("ml-1 flex-1 text-xs", font_cookie.className)}>ShopIvy</h1>
 				<ShoppingBagIcon className="w-[6%] aspect-square h-auto" />
 			</div>

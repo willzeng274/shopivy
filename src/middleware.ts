@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const gatedPages = ['/profile', '/shop'];
+const gatedPages = ['/profile', '/shop', '/auth/verify'];
 const authPages = ['/auth/login', '/auth/signup'];
 
 export function middleware(request: NextRequest) {

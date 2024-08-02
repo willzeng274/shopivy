@@ -45,7 +45,8 @@ export default async function Template({
             <SaveUser user={{
                 id: sessionUser.user.id,
                 email: sessionUser.user.email,
-                name: sessionUser.user.name
+                name: sessionUser.user.name,
+                verified: sessionUser.user.code === null
             }} />
             {children}
         </>

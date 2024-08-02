@@ -11,7 +11,8 @@ import * as NProgress from "nprogress";
 export interface FormResponse {
     zod?: boolean;
 	errors?: unknown;
-	data?: Omit<User, 'password'>;
+	data?: Omit<User, 'password' | 'code'> & { verified: boolean };
+	verified?: boolean;
 }
 
 const initialState = {
@@ -27,6 +28,7 @@ export default function Form({
 }) {
 	const [state, formAction] = useFormState(action, initialState);
 	const login = useAuthStore((state) => state.login);
+	const verify = useAuthStore((state) => state.verify);
 	const router = useRouter();
 
 	useEffect(() => {
@@ -40,6 +42,10 @@ export default function Form({
         }
 		if (state && state.data) {
 			login(state.data);
+			router.push('/profile');
+		}
+		if (state && state.verified) {
+			verify();
 			router.push('/profile');
 		}
 	}, [state]);

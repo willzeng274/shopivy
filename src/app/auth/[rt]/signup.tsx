@@ -24,7 +24,7 @@ export default async function Signup() {
 				<i className="text-xs">Seriously, you won't even know what some of these are.</i>
 			</p>
 
-			<Form className="mt-8 mb-4" action={handleSignup} autoComplete="one-time-code">
+			<Form className="mt-8 mb-4" action={handleSignup} autoComplete="off">
 				<LabelInputContainer className="mb-4">
 					<label htmlFor="display">Display name</label>
 					<Input id="display" name="name" placeholder="David R. Cheriton" type="text" autoComplete="one-time-code" />
