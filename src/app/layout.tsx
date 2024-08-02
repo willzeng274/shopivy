@@ -7,11 +7,6 @@ import NextTopLoader from "nextjs-toploader";
 
 // const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-	title: "ShopIvy",
-	description: "The shop for students",
-};
-
 export default function RootLayout({
 	children,
 }: Readonly<{
@@ -20,12 +15,13 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<head>
-				<link rel="icon" href="/favicon.ico" sizes="any" />
+				<title>ShopIvy</title>
 				<meta property="og:type" content="website" />
 				<meta property="og:url" content="https://shopivy.xyz" />
 				<meta property="og:title" content="ShopIvy" />
 				<meta property="og:description" content="The shop for students" />
 				<meta property="og:image" content="/shopivy.svg" />
+				<link rel="icon" href="/favicon.ico" sizes="any" />
 			</head>
 			<body>
 				<NextTopLoader />
