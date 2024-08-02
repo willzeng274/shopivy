@@ -21,6 +21,11 @@ export default function RootLayout({
 		<html lang="en">
 			<head>
 				<link rel="icon" href="/favicon.ico" sizes="any" />
+				<meta property="og:type" content="website" />
+				<meta property="og:url" content="https://shopivy.xyz" />
+				<meta property="og:title" content="ShopIvy" />
+				<meta property="og:description" content="The shop for students" />
+				<meta property="og:image" content="/shopivy.svg" />
 			</head>
 			<body>
 				<NextTopLoader />
