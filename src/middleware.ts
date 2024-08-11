@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const gatedPages = ['/profile', '/shop', '/auth/verify'];
+const gatedPages = ['/dashboard', '/auth/verify'];
 const authPages = ['/auth/login', '/auth/signup'];
 
 export function middleware(request: NextRequest) {
@@ -11,7 +11,7 @@ export function middleware(request: NextRequest) {
   // console.log("url", request.nextUrl);
   headers.set("x-current-path", request.nextUrl.pathname);
   if (cookies().get("ivysess") && authPages.includes(request.nextUrl.pathname)) {
-    return NextResponse.redirect(new URL('/profile', request.url));
+    return NextResponse.redirect(new URL('/dashboard', request.url));
   } else if (!cookies().get("ivysess") && gatedPages.includes(request.nextUrl.pathname)) {
     return NextResponse.redirect(new URL('/auth/login', request.url));
   }

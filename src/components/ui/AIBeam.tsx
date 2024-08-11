@@ -4,7 +4,7 @@ import React, { forwardRef, useRef } from "react";
 
 import { cn } from "@/utils/cn";
 import { AnimatedBeam } from "@/components/ui/AnimatedBeam";
-import ShoppingCartIcon from "@/components/icons/ShoppingCartIcon";
+import { ShoppingCartIcon } from "lucide-react";
 
 const Circle = forwardRef<HTMLDivElement, { className?: string; children?: React.ReactNode }>(({ className, children }, ref) => {
 	return (

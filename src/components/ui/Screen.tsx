@@ -1,6 +1,6 @@
 import { cn } from "@/utils/cn";
+import { ShoppingCartIcon } from "lucide-react";
 import { Inter } from "next/font/google";
-import ShoppingCartIcon from "../icons/ShoppingCartIcon";
 import Image from "next/image";
 
 const inter = Inter({

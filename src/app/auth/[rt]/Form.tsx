@@ -42,11 +42,11 @@ export default function Form({
         }
 		if (state && state.data) {
 			login(state.data);
-			router.push('/profile');
+			router.push('/dashboard');
 		}
 		if (state && state.verified) {
 			verify();
-			router.push('/profile');
+			router.push('/dashboard');
 		}
 	}, [state]);
 

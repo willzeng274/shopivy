@@ -18,7 +18,7 @@ const links = [
 	{ href: "/auth/login", label: "Login", validateSession: true },
 	{ href: "/auth/signup", label: "Signup", validateSession: true },
 	{ href: "/shop", label: "Cart", validateSession: false },
-	{ href: "/profile", label: "Profile", validateSession: false },
+	{ href: "/dashboard", label: "Dashboard", validateSession: false },
 ];
 
 export default function Header() {

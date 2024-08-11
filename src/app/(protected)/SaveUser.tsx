@@ -1,15 +1,25 @@
-'use client';
+"use client";
 
 import { useAuthStore } from "@/utils/stores/authStore";
 import { User } from "@prisma/client";
-import React from "react";
+import React, { useEffect } from "react";
 
-const SaveUser = React.memo(function Comp({ user }: { user: Omit<User, 'password' | 'code'> & { verified: boolean } }) {
-    const login = useAuthStore((state) => state.login);
-    login(user);
-    return (
-        <></>
-    );
+const SaveUser = React.memo(function Comp({ user }: { user: Omit<User, "password" | "code"> & { verified: boolean } }) {
+	const login = useAuthStore((state) => state.login);
+	login(user);
+
+	useEffect(() => {
+		const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+			event.preventDefault();
+			event.returnValue = "";
+		};
+		window.addEventListener("beforeunload", handleBeforeUnload);
+		return () => {
+			window.removeEventListener("beforeunload", handleBeforeUnload);
+		};
+	}, []);
+
+	return <></>;
 });
 
 export default SaveUser;
