@@ -40,17 +40,35 @@ model Item {
   price       Int
   available   Boolean
 
-  carts CartItem[]
+  carts      CartItem[]
+  ItemDetail ItemDetail[]
+}
+
+model ItemDetail {
+  id     BigInt @id @default(autoincrement())
+  value  String @db.String(255)
+  Item   Item   @relation(fields: [itemId], references: [id])
+  itemId BigInt
 }
 
 model CartItem {
-  user      User     @relation(fields: [userId], references: [id])
-  userId    BigInt
-  Item      Item     @relation(fields: [itemId], references: [id])
-  itemId    BigInt
-  quantity  Int
-  details   String[]
-  createdAt DateTime @default(now())
+  user           User             @relation(fields: [userId], references: [id])
+  userId         BigInt
+  Item           Item             @relation(fields: [itemId], references: [id])
+  itemId         BigInt
+  quantity       Int
+  details        String[]
+  createdAt      DateTime         @default(now())
+  CartItemDetail CartItemDetail[]
 
   @@id([userId, itemId])
+}
+
+model CartItemDetail {
+  cartUserId BigInt
+  cartItemId BigInt
+
+  cartItem CartItem @relation(fields: [cartUserId, cartItemId], references: [userId, itemId])
+
+  @@id([cartUserId, cartItemId])
 }

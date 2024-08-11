@@ -11,7 +11,7 @@ export default function FadeOut({ children }: { children: React.ReactNode }) {
     }, []);
 
     return (
-        <div className={cn("absolute w-full h-full [transition:visibility_0s_1s,opacity_1s_ease-in-out]", {
+        <div className={cn("absolute w-full h-full [transition:visibility_0s_1s,opacity_1s_ease-in-out] z-50", {
             'invisible opacity-0': mounted
         })}>
             {children}

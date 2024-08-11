@@ -7,19 +7,13 @@ export default function Layout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	const ui = <LoadUI />
+	const ui = <LoadUI />;
 	return (
-		<Suspense
-			fallback={
-				<div className="absolute w-full h-full">
-					{ui}
-				</div>
-			}
-		>
-			<FadeOut>
-				{ui}
-            </FadeOut>
-			{children}
-		</Suspense>
+		<>
+			{/* <Suspense fallback={<div className="absolute w-full h-full">{ui}</div>}> */}
+				<FadeOut>{ui}</FadeOut>
+				{children}
+			{/* </Suspense> */}
+		</>
 	);
 }
