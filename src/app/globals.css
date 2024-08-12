@@ -66,6 +66,9 @@
   body {
     @apply bg-background text-foreground;
   }
+  html:has(.group\/dashboard), body:has(.group\/dashboard) {
+    @apply overflow-hidden;
+  }
 }
 
 .bg-gradient-home {

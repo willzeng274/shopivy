@@ -11,6 +11,7 @@ import Form from "./Form";
 import { cookies } from "next/headers";
 import { PrismaClient } from "@prisma/client";
 import { permanentRedirect } from "next/navigation";
+import Link from "next/link";
 
 const prisma = new PrismaClient();
 
@@ -42,7 +43,11 @@ export default function Profile() {
 			<DropdownMenuContent align="end">
 				<DropdownMenuLabel>My Account</DropdownMenuLabel>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem>Settings</DropdownMenuItem>
+				<DropdownMenuItem>
+					<Link href="/dashboard/settings">
+						Settings
+					</Link>
+				</DropdownMenuItem>
 				<DropdownMenuItem>
 					<Form className="w-full" action={handleLogout}>
 						<button className="w-full text-start" type="submit">

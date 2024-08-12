@@ -1,7 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { cookies } from "next/headers";
 import { permanentRedirect } from "next/navigation";
-import SaveUser from "./SaveUser";
+import SaveUser from "./_components/SaveUser";
+import { setServerState } from "@/utils/state";
 
 const prisma = new PrismaClient();
 
@@ -37,8 +38,10 @@ export default async function Template({
         return permanentRedirect("/auth/login");
     }
 
+    setServerState("user", sessionUser.user);
+
     // simulate lag
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
     
 	return (
         <>

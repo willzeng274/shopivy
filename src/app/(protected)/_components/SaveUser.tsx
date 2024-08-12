@@ -8,6 +8,7 @@ const SaveUser = React.memo(function Comp({ user }: { user: Omit<User, "password
 	const login = useAuthStore((state) => state.login);
 	login(user);
 
+	// this is used for command-based routing: Upcoming feature
 	useEffect(() => {
 		const handleBeforeUnload = (event: BeforeUnloadEvent) => {
 			event.preventDefault();

@@ -15,19 +15,19 @@ import { Calendar, Smile, Calculator, User, CreditCard, Settings } from "lucide-
 
 export default function CommandBar() {
 	return (
-        <div className="relative">
-            <Command className="rounded-lg border shadow-md w-full">
-                <CommandInput className="[@supports_not_(field-sizing:content)]:min-w-[calc(23ch)] [field-sizing:content]" placeholder="Type a command or search..." />
-                <div className="absolute w-full top-full left-0 z-50 bg-white shadow-md rounded-lg border">
-                    <CommandListWrapper />
-                </div>
-            </Command>
-        </div>
+		<div className="relative">
+			<Command className="rounded-lg border shadow-md w-full">
+				<CommandInput className="min-w-[calc(23ch)]" placeholder="Type a command or search..." />
+				<div className="absolute w-full top-full left-0 z-50 bg-white shadow-md rounded-lg border">
+					<CommandListWrapper />
+				</div>
+			</Command>
+		</div>
 	);
 }
 
 function CommandListWrapper() {
-    const search = useCommandState((state) => state.search);
+	const search = useCommandState((state) => state.search);
 	return (
 		<CommandList hidden={search === ""}>
 			<CommandEmpty>No results found.</CommandEmpty>

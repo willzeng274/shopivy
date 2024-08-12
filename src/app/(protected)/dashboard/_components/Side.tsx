@@ -1,6 +1,6 @@
 import ShopIvyIcon from "@/components/icons/ShopIvy";
 import { cn } from "@/utils/cn";
-import { HomeIcon, ShoppingCartIcon, UsersIcon } from "lucide-react";
+import { HomeIcon, ShoppingBagIcon, ShoppingCartIcon, UsersIcon } from "lucide-react";
 import Link from "next/link";
 
 export default function Side() {
@@ -22,6 +22,9 @@ export function SideNav({ isSheet = false }: { isSheet?: boolean }) {
 			</div>
 			<SideLink isSheet={isSheet} href="/dashboard" icon={<HomeIcon className="h-5 w-5" />}>
 				Home
+			</SideLink>
+			<SideLink isSheet={isSheet} href="/dashboard/shop" icon={<ShoppingBagIcon className="h-5 w-5" />}>
+				Shop
 			</SideLink>
 			<SideLink isSheet={isSheet} href="/dashboard/cart" icon={<ShoppingCartIcon className="h-5 w-5" />}>
 				Cart

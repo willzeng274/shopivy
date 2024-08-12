@@ -4,7 +4,7 @@ import React from "react";
 export default function Page() {
     return (
         <div>
-            <p>Cart page is still under construction</p>
+            <p>Shopping page is still under construction</p>
             <Link href="/dashboard" className="text-blue-500 hover:underline">Go to dashboard</Link>
         </div>
     );

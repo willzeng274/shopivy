@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import LoadUI from "./LoadUI";
-import FadeOut from "./FadeOut";
+import LoadUI from "./_components/LoadUI";
+import FadeOut from "./_components/FadeOut";
 
 export default function Layout({
 	children,
@@ -10,10 +10,10 @@ export default function Layout({
 	const ui = <LoadUI />;
 	return (
 		<>
-			{/* <Suspense fallback={<div className="absolute w-full h-full">{ui}</div>}> */}
+			<Suspense fallback={<div className="absolute w-full h-full">{ui}</div>}>
 				<FadeOut>{ui}</FadeOut>
 				{children}
-			{/* </Suspense> */}
+			</Suspense>
 		</>
 	);
 }
