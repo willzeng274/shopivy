@@ -1,23 +1,39 @@
-import { User } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
+import { cache } from "react";
+import { cookies } from "next/headers";
+import { permanentRedirect } from "next/navigation";
 
-interface State {
-    key2: number;
-    user: User;
-}
+const prisma = new PrismaClient();
 
-type Keys = keyof State;
+// MUST be called on the server.
+// Only called once throughout the app's lifetime
+export const fetchUserFromSess = cache(async () => {
+    console.log("FETCHING USER FROM SESSION...");
+    const cookieStore = cookies();
 
-// note: this only works without fast refresh, meaning stability will suffer in dev mode
-const serverState = new Map<Keys, State[Keys]>();
+    // because of middleware, this cannot be null
+    const sess = cookieStore.get("ivysess")!;
 
-export function setServerState<K extends Keys>(key: K, value: State[K]) {
-    serverState.set(key, value);
-}
+    const sessionUser = await prisma.session.findUnique({
+        where: {
+            id: sess.value
+        },
+        select: {
+            user: true
+        }
+    });
 
-export function getServerState<K extends Keys>(key: K): State[K] | undefined {
-    return serverState.get(key) as State[K] | undefined;
-}
+    if (!sessionUser) {
+        await prisma.session.delete({
+            where: {
+                id: sess.value
+            }
+        });
+        
+        cookieStore.delete("ivysess");
 
-export function deleteServerState<K extends Keys>(key: K) {
-    serverState.delete(key);
-}
+        return permanentRedirect("/auth/login");
+    }
+
+    return sessionUser.user;
+});

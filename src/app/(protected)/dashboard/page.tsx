@@ -1,19 +1,17 @@
-import { getServerState } from "@/utils/state";
+import { fetchUserFromSess } from "@/utils/state";
 import Link from "next/link";
 import Recent from "./_components/Recent";
 import { Suspense } from "react";
 import Recommended from "./_components/Recommended";
 // import { permanentRedirect } from "next/navigation";
 
-export default function Page() {
-	const user = getServerState("user");
-	console.log("server state", user);
-	if (!user) {
-		// return <>no state</>;
-	}
+export default async function Page() {
+
+	const user = await fetchUserFromSess();
+
 	return (
 		<main className="w-full p-6 bg-gradient-to-br from-purple-100 to-pink-100">
-			<h2 className="text-2xl font-semibold text-gray-800 mb-6">Welcome back, {user?.name}!</h2>
+			<h2 className="text-2xl font-semibold text-gray-800 mb-6">Welcome back, {user.name}!</h2>
 
 			<section className="mb-8">
 				<h3 className="text-xl font-semibold text-gray-700 mb-4">Featured Deals</h3>
