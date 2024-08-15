@@ -13,7 +13,9 @@ import { PrismaClient } from "@prisma/client";
 import { permanentRedirect } from "next/navigation";
 import Link from "next/link";
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+    log: ['query', 'info', 'warn', 'error'],
+});
 
 export default function Profile() {
 	async function handleLogout() {

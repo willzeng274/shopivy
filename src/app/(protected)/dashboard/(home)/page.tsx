@@ -6,18 +6,27 @@ import Recommended from "./_components/Recommended";
 // import { permanentRedirect } from "next/navigation";
 
 export default async function Page() {
-
 	const user = await fetchUserFromSess();
 
 	return (
-		<main className="w-full p-6 bg-gradient-to-br from-purple-100 to-pink-100">
+		<main className="w-full p-6 bg-gradient-to-br from-slate-100 to-zinc-100 min-h-full">
 			<h2 className="text-2xl font-semibold text-gray-800 mb-6">Welcome back, {user.name}!</h2>
 
-			<section className="mb-8">
-				<h3 className="text-xl font-semibold text-gray-700 mb-4">Featured Deals</h3>
+			<section className="mb-8 space-y-4">
+				<h3 className="text-xl font-semibold text-gray-700">Featured Deals</h3>
 				<div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg shadow-lg p-6 text-white">
 					<h4 className="text-2xl font-bold mb-2">Summer Sale!</h4>
 					<p className="mb-4">Get 20% off on all textbooks and study materials.</p>
+					<Link
+						href="/dashboard/shop"
+						className="bg-white text-purple-600 hover:bg-gray-100 h-10 px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+					>
+						Shop Now
+					</Link>
+				</div>
+				<div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-lg p-6 text-white">
+					<h4 className="text-2xl font-bold mb-2">Student Success Sale!</h4>
+					<p className="mb-4">Gear up for the new semester with amazing discounts on all student essentials.</p>
 					<Link
 						href="/dashboard/shop"
 						className="bg-white text-purple-600 hover:bg-gray-100 h-10 px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
@@ -45,7 +54,7 @@ export default async function Page() {
 						</div>
 					}
 				>
-					<div className="flex space-x-4 overflow-x-auto pb-4 max-w-full">
+					<div className="flex space-x-4 whitespace-nowrap overflow-x-auto p-2 pb-4 max-w-full">
 						<Recommended.List />
 					</div>
 				</Suspense>

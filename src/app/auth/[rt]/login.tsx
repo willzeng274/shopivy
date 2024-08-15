@@ -4,8 +4,8 @@ import { cn } from "@/utils/cn";
 import Link from "next/link";
 import { Inter } from "next/font/google";
 import { handleLogin } from "./actions";
-import FormBtn from "./FormBtn";
-import Form from "./Form";
+import FormBtn from "./_components/FormBtn";
+import Form from "./_components/Form";
 
 const inter = Inter({
 	weight: "400",

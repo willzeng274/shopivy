@@ -88,7 +88,7 @@ const ShimmerButton = React.forwardRef<HTMLButtonElement, ShimmerButtonProps>(
         <div
           id="backdrop"
           className={cn(
-            "absolute -z-20 [background:var(--bg)] [border-radius:var(--radius)] [inset:var(--cut)]",
+            "absolute -z-20 [background:var(--bg)] [border-radius:var(--radius)] [inset:var(--cut)] duration-300 ease-in-out",
           )}
         />
       </button>

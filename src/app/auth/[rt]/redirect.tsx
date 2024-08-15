@@ -11,7 +11,7 @@ export default function Redirect() {
     console.log("user", user);
 
     useEffect(() => {
-        if (user?.verified) router.push("/profile");
+        if (user?.verified) router.push("/dashboard");
     }, [user]);
 
     return <></>

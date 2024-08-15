@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import LoadUI from "./_components/LoadUI";
 import FadeOut from "./_components/FadeOut";
+import { Toaster } from "react-hot-toast";
 
 export default function Layout({
 	children,
@@ -14,6 +15,7 @@ export default function Layout({
 				<FadeOut>{ui}</FadeOut>
 				{children}
 			</Suspense>
+			<Toaster position="bottom-right" />
 		</>
 	);
 }

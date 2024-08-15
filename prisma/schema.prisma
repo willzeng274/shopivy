@@ -22,6 +22,7 @@ model User {
 
   cartItems CartItem[]
   sessions  Session[]
+  reviews   Review[]
 
   @@index(email)
 }
@@ -31,42 +32,104 @@ model Session {
   userId    BigInt
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
+  lastLogin DateTime @default(now())
+}
+
+model Review {
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId BigInt
+  item     Item   @relation(fields: [itemId], references: [id])
+  itemId   BigInt
+
+  anonymous Boolean
+  rating    Int     @db.Int2
+  comment   String? @db.String(255)
+
+  @@id([authorId, itemId])
+}
+
+enum Category {
+  Book
+  Electronic
+  Stationary
+  Course
+  Dorm
+  Tutoring
+  Service
+  Other
 }
 
 model Item {
-  id          BigInt   @id @default(autoincrement())
-  imageUrl    String   @db.String(255)
-  detailsList String[] @db.String(127)
+  id          BigInt       @id @default(autoincrement())
+  name        String
+  imageUrl    String       @db.String(255)
   price       Int
+  category    Category     @default(Other)
+  detailsList ItemDetail[]
   available   Boolean
 
-  carts      CartItem[]
-  ItemDetail ItemDetail[]
+  carts   CartItem[]
+  reviews Review[]
 }
 
 model ItemDetail {
-  id     BigInt @id @default(autoincrement())
-  value  String @db.String(255)
-  Item   Item   @relation(fields: [itemId], references: [id])
-  itemId BigInt
+  id              BigInt           @id @default(autoincrement())
+  detail          String           @db.String(255)
+  Item            Item             @relation(fields: [itemId], references: [id])
+  itemId          BigInt
+  // irrelevant
+  CartItemDetails CartItemDetail[]
 }
 
 model CartItem {
-  user           User             @relation(fields: [userId], references: [id])
-  userId         BigInt
-  Item           Item             @relation(fields: [itemId], references: [id])
-  itemId         BigInt
-  quantity       Int
-  details        String[]
-  createdAt      DateTime         @default(now())
-  CartItemDetail CartItemDetail[]
+  user      User             @relation(fields: [userId], references: [id])
+  userId    BigInt
+  Item      Item             @relation(fields: [itemId], references: [id])
+  itemId    BigInt
+  quantity  Int
+  details   CartItemDetail[]
+  createdAt DateTime         @default(now())
+  ordered   Boolean
+  // if order is TRUE, this must exist
+  OrderItem OrderItem?
 
   @@id([userId, itemId])
 }
 
-model CartItemDetail {
+enum Status {
+  pending // right after payment
+  shipped // waiting to be delivered
+  delivered // delivered
+  returned // returned
+  failed // error
+}
+
+model Order {
+  id        String      @id @default(cuid()) @db.String(30)
+  orders    OrderItem[]
+  status    Status
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model OrderItem {
+  order      Order    @relation(fields: [orderId], references: [id])
+  orderId    String   @db.String(30)
   cartUserId BigInt
   cartItemId BigInt
+  cartItem   CartItem @relation(fields: [cartUserId, cartItemId], references: [userId, itemId])
+  createdAt  DateTime @default(now())
+
+  @@id([orderId, cartUserId, cartItemId])
+  // one to one
+  @@unique([cartUserId, cartItemId])
+}
+
+model CartItemDetail {
+  detail       ItemDetail @relation(fields: [itemDetailId], references: [id])
+  itemDetailId BigInt
+  cartUserId   BigInt
+  cartItemId   BigInt
 
   cartItem CartItem @relation(fields: [cartUserId, cartItemId], references: [userId, itemId])
 

@@ -39,7 +39,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 						</div>
 					</div>
 				</header>
-				<ScrollArea className="w-full">{children}</ScrollArea>
+				<ScrollArea className="w-full flex-1">{children}</ScrollArea>
 			</div>
 		</div>
 	);

@@ -1,9 +1,10 @@
 import ShopIvyIcon from "@/components/icons/ShopIvy";
 import { cn } from "@/utils/cn";
-import { HomeIcon, ShoppingBagIcon, ShoppingCartIcon, UsersIcon } from "lucide-react";
+import { countCartItems, countOrderItems, fetchUserFromSess } from "@/utils/state";
+import { HomeIcon, ShoppingBagIcon, ShoppingBasket, ShoppingCartIcon, UsersIcon } from "lucide-react";
 import Link from "next/link";
 
-export default function Side() {
+export default async function Side() {
 	return (
 		<aside className="group/sidebar hidden w-16 hover:w-48 flex-col border-r md:flex transition-[width] duration-500 ease-in-out px-2">
 			<SideNav />
@@ -11,7 +12,10 @@ export default function Side() {
 	);
 }
 
-export function SideNav({ isSheet = false }: { isSheet?: boolean }) {
+export async function SideNav({ isSheet = false }: { isSheet?: boolean }) {
+	const user = await fetchUserFromSess();
+	const cartItemCount = await countCartItems(user.id);
+	const orderItemCount: number = await countOrderItems(user.id);
 	return (
 		<nav className={cn("grid gap-4 mt-4 [&>*]:pl-3", isSheet ? "text-lg" : "text-sm")}>
 			<div className="flex items-center gap-2 rounded-md py-2 text-card-foreground">
@@ -26,8 +30,37 @@ export function SideNav({ isSheet = false }: { isSheet?: boolean }) {
 			<SideLink isSheet={isSheet} href="/dashboard/shop" icon={<ShoppingBagIcon className="h-5 w-5" />}>
 				Shop
 			</SideLink>
-			<SideLink isSheet={isSheet} href="/dashboard/cart" icon={<ShoppingCartIcon className="h-5 w-5" />}>
+			<SideLink
+				isSheet={isSheet}
+				href="/dashboard/cart"
+				icon={
+					<div className="relative">
+						<ShoppingCartIcon className="h-5 w-5" />
+						{cartItemCount > 0 && (
+							<span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+								{cartItemCount}
+							</span>
+						)}
+					</div>
+				}
+			>
 				Cart
+			</SideLink>
+			<SideLink
+				isSheet={isSheet}
+				href="/dashboard/order"
+				icon={
+					<div className="relative">
+						<ShoppingBasket className="h-5 w-5" />
+						{orderItemCount > 0 && (
+							<span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+								{orderItemCount}
+							</span>
+						)}
+					</div>
+				}
+			>
+				Order
 			</SideLink>
 			<SideLink isSheet={isSheet} href="/dashboard/customers" icon={<UsersIcon className="h-5 w-5" />}>
 				Customers

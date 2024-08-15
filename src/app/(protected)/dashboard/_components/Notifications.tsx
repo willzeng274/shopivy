@@ -8,26 +8,27 @@ import {
 } from "@/components/ui/Dropdown";
 import { cn } from "@/utils/cn";
 import { BellIcon, Calendar, LucideProps, MessageSquare, RefreshCcw } from "lucide-react";
+import Link from "next/link";
 
 const notifications = [
 	{
 		icon: MessageSquare,
-		title: "New message",
-		description: "You have a new message from Alice",
+		title: "New message from Mesut Özil",
+		description: "",
 		time: "2 min ago",
 		isUnread: true,
 	},
 	{
 		icon: RefreshCcw,
-		title: "Project update",
-		description: "Your project 'App redesign' has been updated",
+		title: "Order update",
+		description: "Your order for the 'Waterloo > Toronto Shirt' has been updated",
 		time: "1 hour ago",
 		isUnread: true,
 	},
 	{
 		icon: Calendar,
 		title: "Reminder",
-		description: "Meeting with the team at 3 PM",
+		description: "Your account will be deleted in 3 days due to insufficient payment",
 		time: "3 hours ago",
 		isUnread: false,
 	},
@@ -45,13 +46,23 @@ export default function Notifications() {
 			<DropdownMenuContent className="w-80">
 				<DropdownMenuLabel>Notifications</DropdownMenuLabel>
 				<DropdownMenuSeparator />
-				{notifications.map((notification, index) => (
-					<DropdownMenuItem key={index} className="focus:bg-muted">
-						<NotificationItem {...notification} />
-					</DropdownMenuItem>
-				))}
-				<DropdownMenuSeparator />
-				<DropdownMenuItem className="text-center cursor-pointer">View all notifications</DropdownMenuItem>
+				{notifications.length ? (
+					<>
+						{notifications.map((notification, index) => (
+							<DropdownMenuItem key={index} className="focus:bg-muted">
+								<NotificationItem {...notification} />
+							</DropdownMenuItem>
+						))}
+						<DropdownMenuSeparator />
+						<DropdownMenuItem className="text-center cursor-pointer">
+							<Link href="/dashboard/notifications">
+								View all notifications
+							</Link>
+						</DropdownMenuItem>
+					</>
+				) : (
+					<DropdownMenuItem className="hover:!bg-[initial]">No notifications.</DropdownMenuItem>
+				)}
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);

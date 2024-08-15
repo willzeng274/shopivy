@@ -17,7 +17,7 @@ const links = [
 	{ href: "/about", label: "About", validateSession: null },
 	{ href: "/auth/login", label: "Login", validateSession: true },
 	{ href: "/auth/signup", label: "Signup", validateSession: true },
-	{ href: "/shop", label: "Cart", validateSession: false },
+	// { href: "/shop", label: "Cart", validateSession: false },
 	{ href: "/dashboard", label: "Dashboard", validateSession: false },
 ];
 
