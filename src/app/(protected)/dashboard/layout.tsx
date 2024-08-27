@@ -1,18 +1,17 @@
-import Side, { SideNav } from "./Side";
+import Side, { SideNav } from "./_components/Side";
 import { MenuIcon } from "lucide-react";
-import { ScrollArea } from "@/components/ui/ScrollArea";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/Sheet";
-import Notifications from "./Notifications";
-import Profile from "./Profile";
-import CommandBar from "./CommandBar";
+import Notifications from "./_components/Notifications";
+import Profile from "./_components/Profile";
+import CommandBar from "./_components/CommandBar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
 	return (
-		<div className="flex h-dvh w-full bg-background">
+		<div className="group/dashboard flex h-dvh w-full bg-background">
 			<Side />
 			<div className="flex flex-1 flex-col min-w-0 w-full">
 				<header className="bg-white shadow-sm sticky z-50">
-					<div className="flex items-center p-4 space-x-4">
+					<div className="flex items-center py-3 px-4 space-x-4">
 						<Sheet>
 							<SheetTrigger asChild>
 								<button className="md:hidden h-10 w-10 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground">
@@ -39,7 +38,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 						</div>
 					</div>
 				</header>
-				<ScrollArea className="w-full">{children}</ScrollArea>
+				{children}
 			</div>
 		</div>
 	);

@@ -1,10 +1,11 @@
 import { cn } from "@/utils/cn";
+import { formatter } from "@/utils/formatter";
 import { ShoppingCartIcon } from "lucide-react";
 import { Inter } from "next/font/google";
 import Image from "next/image";
 
 const inter = Inter({
-    weight: "400",
+	weight: "400",
 	display: "swap",
 	subsets: ["latin"],
 	preload: true,
@@ -58,10 +59,6 @@ const cartItems: CartItem[] = [
 const total = cartItems.reduce((prev, curr) => prev + curr.price, 0);
 
 export default function Screen({ className, children }: ScreenProps) {
-	const formatter = new Intl.NumberFormat("en-US", {
-		style: "currency",
-		currency: "CAD",
-	});
 	return (
 		<div
 			className={cn(
@@ -69,8 +66,8 @@ export default function Screen({ className, children }: ScreenProps) {
 				"aspect-[975/571] w-auto max-w-full h-[571px] max-h-[70dvh]",
 				"flex-col",
 				"md:translate-x-[-15%] md:-translate-y-[10%]",
-                "hidden md:flex",
-                "test-aurora",
+				"hidden md:flex",
+				"test-aurora",
 				className
 			)}
 		>
@@ -104,17 +101,30 @@ export default function Screen({ className, children }: ScreenProps) {
 								<h1 className="text-[length:0.5rem] leading-3">{formatter.format(item.price)}</h1>
 								<span className="flex-1" />
 								<div className="flex flex-row items-center gap-1">
-									{item.available ? <CheckmarkIcon className="h-2 w-2 text-green-700" /> : <CrossIcon className="h-2 w-2 text-red-700" />}
-								    <p className="text-[length:0.5rem] leading-3">{item.available ? "In stock" : "Out of stock"}</p>
+									{item.available ? (
+										<CheckmarkIcon className="h-2 w-2 text-green-700" />
+									) : (
+										<CrossIcon className="h-2 w-2 text-red-700" />
+									)}
+									<p className="text-[length:0.5rem] leading-3">{item.available ? "In stock" : "Out of stock"}</p>
 								</div>
 							</div>
-                            <span className="flex-1" />
-                            <div className="self-center pr-10 flex flex-row gap-[0.05rem]">
-                                <button className="h-4 w-4 border border-[#e4e4e7] rounded-md bg-white flex justify-center items-center hover:bg-[#f4f4f5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"><MinusIcon className="h-2 w-2" /></button>
-                                <input className="h-4 w-6 text-[length:0.5rem] border border-[#e4e4e7] rounded-md bg-white text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2" type="number" value={item.quantity} readOnly />
-                                <button className="h-4 w-4 border border-[#e4e4e7] rounded-md bg-white flex justify-center items-center hover:bg-[#f4f4f5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"><PlusIcon className="h-2 w-2" /></button>
-                            </div>
-                            <XIcon className="m-1 h-4 w-4 text-gray-500 cursor-pointer" />
+							<span className="flex-1" />
+							<div className="self-center pr-10 flex flex-row gap-[0.05rem]">
+								<button className="h-4 w-4 border border-[#e4e4e7] rounded-md bg-white flex justify-center items-center hover:bg-[#f4f4f5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2">
+									<MinusIcon className="h-2 w-2" />
+								</button>
+								<input
+									className="h-4 w-6 text-[length:0.5rem] border border-[#e4e4e7] rounded-md bg-white text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+									type="number"
+									value={item.quantity}
+									readOnly
+								/>
+								<button className="h-4 w-4 border border-[#e4e4e7] rounded-md bg-white flex justify-center items-center hover:bg-[#f4f4f5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2">
+									<PlusIcon className="h-2 w-2" />
+								</button>
+							</div>
+							<XIcon className="m-1 h-4 w-4 text-gray-500 cursor-pointer" />
 						</div>
 					))}
 				</div>
@@ -131,16 +141,16 @@ export default function Screen({ className, children }: ScreenProps) {
 						</div>
 						<div className="flex flex-row justify-between py-2 text-xs">
 							<span>Tax estimate</span>
-							<span>{formatter.format(total*0.13)}</span>
+							<span>{formatter.format(total * 0.13)}</span>
 						</div>
 					</div>
 					<div className="flex flex-row justify-between text-sm">
 						<span>Order total</span>
-						<span>{formatter.format(total*1.13)}</span>
+						<span>{formatter.format(total * 1.13)}</span>
 					</div>
-                    <button className="w-full py-1 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
-                        Checkout
-                    </button>
+					<button className="w-full py-1 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+						Checkout
+					</button>
 				</div>
 			</div>
 			{children}
@@ -195,41 +205,40 @@ function XIcon(props: React.HTMLAttributes<SVGElement>) {
 }
 
 function MinusIcon(props: React.HTMLAttributes<SVGElement>) {
-    return (
-      <svg
-        {...props}
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M5 12h14" />
-      </svg>
-    )
-  }
-  
-  
-  function PlusIcon(props: React.HTMLAttributes<SVGElement>) {
-    return (
-      <svg
-        {...props}
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M5 12h14" />
-        <path d="M12 5v14" />
-      </svg>
-    )
-  }
+	return (
+		<svg
+			{...props}
+			xmlns="http://www.w3.org/2000/svg"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth="2"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		>
+			<path d="M5 12h14" />
+		</svg>
+	);
+}
+
+function PlusIcon(props: React.HTMLAttributes<SVGElement>) {
+	return (
+		<svg
+			{...props}
+			xmlns="http://www.w3.org/2000/svg"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth="2"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		>
+			<path d="M5 12h14" />
+			<path d="M12 5v14" />
+		</svg>
+	);
+}

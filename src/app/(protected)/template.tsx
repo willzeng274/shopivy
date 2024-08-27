@@ -1,52 +1,24 @@
-import { PrismaClient } from "@prisma/client";
-import { cookies } from "next/headers";
-import { permanentRedirect } from "next/navigation";
-import SaveUser from "./SaveUser";
-
-const prisma = new PrismaClient();
+import SaveUser from "./_components/SaveUser";
+import { fetchUserFromSess } from "@/utils/state";
 
 export default async function Template({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-
-    const cookieStore = cookies();
-
-    // because of middleware, this cannot be null
-    const sess = cookieStore.get("ivysess")!;
-
-    const sessionUser = await prisma.session.findUnique({
-        where: {
-            id: sess.value
-        },
-        select: {
-            user: true
-        }
-    });
-
-    if (!sessionUser) {
-        await prisma.session.delete({
-            where: {
-                id: sess.value
-            }
-        });
-        
-        cookieStore.delete("ivysess");
-
-        return permanentRedirect("/auth/login");
-    }
+    const user = await fetchUserFromSess();
 
     // simulate lag
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
     
 	return (
         <>
             <SaveUser user={{
-                id: sessionUser.user.id,
-                email: sessionUser.user.email,
-                name: sessionUser.user.name,
-                verified: sessionUser.user.code === null
+                id: user.id,
+                email: user.email,
+                name: user.name,
+                seller: user.seller,
+                verified: user.code === null
             }} />
             {children}
         </>

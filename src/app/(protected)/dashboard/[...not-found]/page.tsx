@@ -1,9 +1,10 @@
 import React from "react";
 
 export default function DashboardNotFound() {
+    
     return (
         <>
-            Not found.
+            {"Error: Dashboard subpage not found"}
         </>
     );
 }
