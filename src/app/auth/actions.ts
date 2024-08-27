@@ -264,6 +264,7 @@ export async function handleLogin(_prevState: FormResponse, formData: FormData) 
             id: user.id,
             email: user.email,
             name: user.name,
+            seller: user.seller,
             verified: user.code === null
             // not included: user.password, sess.id, sess.createdAt
             // reason: password shouldn't be exposed even as a hash
@@ -342,6 +343,7 @@ export async function handleSignup(_prevState: FormResponse, formData: FormData)
             id: users[0].id,
             email: users[0].email,
             name: users[0].name,
+            seller: users[0].seller,
             verified: users[0].code === null
         }
     };
