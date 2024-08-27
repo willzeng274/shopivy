@@ -19,18 +19,27 @@ model User {
   name     String  @db.String(255)
   password String  @db.String
   code     String? @db.String(6)
+  seller   Boolean @default(false)
 
-  cartItems CartItem[]
-  sessions  Session[]
-  reviews   Review[]
+  cartItems  CartItem[]
+  sessions   Session[]
+  reviews    Review[]
+  recoveries RecoverySession[]
+  orders     Order[]
 
   @@index(email)
+}
+
+model RecoverySession {
+  id     String @id @default(cuid()) @db.String(30)
+  userId BigInt
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Session {
   id        String   @id @default(cuid()) @db.String(30)
   userId    BigInt
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   lastLogin DateTime @default(now())
 }
@@ -38,7 +47,7 @@ model Session {
 model Review {
   author   User   @relation(fields: [authorId], references: [id])
   authorId BigInt
-  item     Item   @relation(fields: [itemId], references: [id])
+  item     Item   @relation(fields: [itemId], references: [id], onDelete: Cascade)
   itemId   BigInt
 
   anonymous Boolean
@@ -75,14 +84,14 @@ model Item {
 model ItemDetail {
   id              BigInt           @id @default(autoincrement())
   detail          String           @db.String(255)
-  Item            Item             @relation(fields: [itemId], references: [id])
+  Item            Item             @relation(fields: [itemId], references: [id], onDelete: Cascade)
   itemId          BigInt
   // irrelevant
   CartItemDetails CartItemDetail[]
 }
 
 model CartItem {
-  user      User             @relation(fields: [userId], references: [id])
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    BigInt
   Item      Item             @relation(fields: [itemId], references: [id])
   itemId    BigInt
@@ -108,6 +117,8 @@ model Order {
   id        String      @id @default(cuid()) @db.String(30)
   orders    OrderItem[]
   status    Status
+  userId    BigInt
+  user      User        @relation(fields: [userId], references: [id])
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
 }
@@ -131,7 +142,7 @@ model CartItemDetail {
   cartUserId   BigInt
   cartItemId   BigInt
 
-  cartItem CartItem @relation(fields: [cartUserId, cartItemId], references: [userId, itemId])
+  cartItem CartItem @relation(fields: [cartUserId, cartItemId], references: [userId, itemId], onDelete: Cascade)
 
   @@id([cartUserId, cartItemId])
 }

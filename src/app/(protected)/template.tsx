@@ -17,6 +17,7 @@ export default async function Template({
                 id: user.id,
                 email: user.email,
                 name: user.name,
+                seller: user.seller,
                 verified: user.code === null
             }} />
             {children}

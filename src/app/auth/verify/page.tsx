@@ -1,7 +1,7 @@
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/InputOTP";
-import Form from "./_components/Form";
-import { handleVerify } from "./actions";
-import Redirect from "./redirect";
+import Form from "../_components/Form";
+import { handleVerify } from "../actions";
+import Redirect from "../redirect";
 
 export default function Verify() {
 	return (

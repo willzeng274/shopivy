@@ -1,10 +1,8 @@
-'use server';
-
 import { Prisma, PrismaClient, type User } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { z } from "zod";
 import { zfd } from "zod-form-data";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { FormResponse } from "./_components/Form";
 import { createTransport } from "nodemailer";
 
@@ -29,6 +27,19 @@ const verifySchema = zfd.formData({
     pin: z.string().min(6, {
         message: "Your one-time password must be 6 characters.",
     }),
+});
+
+const resetSchema = zfd.formData({
+    password: zfd.text(),
+    confirmPassword: zfd.text()
+}).superRefine(({ password, confirmPassword }, ctx) => {
+    if (confirmPassword !== password) {
+        ctx.addIssue({
+            code: "custom",
+            message: "The passwords did not match",
+            path: ['confirmPassword']
+        });
+    }
 });
 
 function email(to: string, subject: string, text: string) {
@@ -63,7 +74,90 @@ function email(to: string, subject: string, text: string) {
     });
 }
 
+export function handlePasswordReset(userId: bigint) {
+    return async function (_prevState: FormResponse, formData: FormData) {
+        "use server";
+        const schema = resetSchema.safeParse(formData);
+
+        if (schema.error) {
+            return {
+                zod: true,
+                errors: schema.error.flatten().fieldErrors,
+            };
+        }
+
+        const salt = await bcrypt.genSalt(saltRounds);
+        const hashedPassword = await bcrypt.hash(schema.data.password, salt);
+
+        await prisma.user.update({
+            where: {
+                id: userId
+            },
+            data: {
+                password: hashedPassword
+            }
+        });
+
+        await prisma.recoverySession.deleteMany({
+            where: {
+                userId: userId
+            }
+        });
+
+        return {
+            reset: true
+        };
+    }
+}
+
+export function handleRecovery(origin: string) {
+    return async function (_prevState: FormResponse, formData: FormData) {
+        "use server";
+        const schema = zfd.formData({
+            email: zfd.text(z.string().email())
+        }).safeParse(formData);
+
+        if (schema.error) {
+            return {
+                zod: true,
+                errors: schema.error.flatten().fieldErrors,
+            };
+        }
+
+        const user = await prisma.user.findUnique({
+            where: {
+                email: schema.data.email
+            }
+        });
+
+        if (!user) {
+            return {
+                errors: ["User not found"],
+            };
+        }
+
+        const sess = await prisma.recoverySession.create({
+            data: {
+                userId: user.id
+            },
+            select: {
+                id: true
+            }
+        });
+
+        console.log(`URL: ${origin}/auth/recovery?recoverId=${sess.id}`);
+
+        email(schema.data.email, "Reset your password", `${origin}/auth/recovery?recoverId=${sess.id}`);
+
+        return {
+            resetEmail: true
+        };
+    }
+}
+
 export async function handleVerify(_prevState: FormResponse, formData: FormData) {
+    "use server";
+
     const schema = verifySchema.safeParse(formData);
 
     if (schema.error) {
@@ -126,6 +220,8 @@ export async function handleVerify(_prevState: FormResponse, formData: FormData)
 }
 
 export async function handleLogin(_prevState: FormResponse, formData: FormData) {
+    "use server";
+
     const schema = loginSchema.safeParse(formData);
 
     if (schema.error) {
@@ -144,7 +240,7 @@ export async function handleLogin(_prevState: FormResponse, formData: FormData) 
     if (!user) {
         return {
             errors: ["User not found"],
-        }
+        };
     }
 
     if (!await bcrypt.compare(schema.data.password, user.password)) {
@@ -178,6 +274,7 @@ export async function handleLogin(_prevState: FormResponse, formData: FormData) 
 }
 
 export async function handleSignup(_prevState: FormResponse, formData: FormData) {
+    "use server";
     const schema = signupSchema.safeParse(formData);
 
     if (schema.error) {
@@ -214,7 +311,7 @@ export async function handleSignup(_prevState: FormResponse, formData: FormData)
 
     // console.log("users", users);
 
-    if (!await bcrypt.compare(schema.data.password, users[0].password)) {
+    if (!users[0].is_new && !await bcrypt.compare(schema.data.password, users[0].password)) {
         return {
             errors: ["Incorrect password"],
         };

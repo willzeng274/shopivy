@@ -2,6 +2,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { formatter } from "@/utils/formatter";
 import { fetchUserFromSess, getPurchases } from "@/utils/state";
 import { PackageIcon } from "lucide-react";
+import Link from "next/link";
 
 const Recent = {
 	Loading,
@@ -26,7 +27,7 @@ export async function List() {
 							<h4 className="font-semibold text-gray-800">{item.name}</h4>
 							<p className="text-sm text-gray-500">Purchased on {item.createdAt.toISOString().split("T")[0]}</p>
 						</div>
-						<p className="font-semibold text-green-600">{formatter.format(item.price)}</p>
+						<p className="font-semibold text-green-600">{formatter.format(item.price / 100)}</p>
 					</div>
 				))
 			) : (
@@ -34,7 +35,7 @@ export async function List() {
 					<PackageIcon className="mx-auto h-12 w-12 text-gray-400 mb-4" />
 					<h4 className="text-xl font-semibold text-gray-800 mb-2">No purchases yet</h4>
 					<p className="text-gray-600 mb-4">Start shopping to see your recent purchases here!</p>
-					<button className="h-10 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">Explore Products</button>
+					<Link href="/dashboard/shop" className="h-10 px-4 py-2 bg-red-600 hover:bg-red-700 text-white inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">Explore Products</Link>
 				</div>
 			)}
 		</>

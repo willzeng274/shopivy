@@ -13,6 +13,8 @@ export interface FormResponse {
 	errors?: unknown;
 	data?: Omit<User, 'password' | 'code'> & { verified: boolean };
 	verified?: boolean;
+	resetEmail?: boolean;
+	reset?: boolean;
 }
 
 const initialState = {
@@ -32,21 +34,30 @@ export default function Form({
 	const router = useRouter();
 
 	useEffect(() => {
-        if (state && state.errors) {
+		if (!state) return;
+        if (state.errors) {
             // console.log("new message", state.errors);
             if (state.zod) {
+				NProgress.done();
                 return Object.entries(state.errors).forEach(([k, v]) => toast.error(`${k} field error: ${v}`));
             }
 			if (String(state.errors)) toast.error(String(state.errors));
 			NProgress.done();
         }
-		if (state && state.data) {
+		if (state.data) {
 			login(state.data);
 			router.push('/dashboard');
 		}
-		if (state && state.verified) {
+		if (state.verified) {
 			verify();
 			router.push('/dashboard');
+		}
+		if (state.resetEmail) {
+			toast.success("Reset password email sent successfully");
+		}
+		if (state.reset) {
+			toast.success("Password reset successfully");
+			router.push('/auth/login');
 		}
 	}, [state]);
 

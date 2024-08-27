@@ -1,6 +1,5 @@
 import Side, { SideNav } from "./_components/Side";
 import { MenuIcon } from "lucide-react";
-import { ScrollArea } from "@/components/ui/ScrollArea";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/Sheet";
 import Notifications from "./_components/Notifications";
 import Profile from "./_components/Profile";
@@ -39,7 +38,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 						</div>
 					</div>
 				</header>
-				<ScrollArea className="w-full flex-1">{children}</ScrollArea>
+				{children}
 			</div>
 		</div>
 	);
