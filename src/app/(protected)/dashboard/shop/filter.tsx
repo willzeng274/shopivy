@@ -1,10 +1,9 @@
 import { ScrollArea } from "@/components/ui/ScrollArea";
-import { Slider } from "@/components/ui/Slider";
 import { cn } from "@/utils/cn";
 import { ChevronRight } from "lucide-react";
 import { Category } from "@prisma/client";
-import FilterBtn from "./filterBtn";
-import RangeSelect from "./range";
+import FilterBtn from "./_components/filterBtn";
+import RangeSelect from "./_components/range";
 
 export default function FilterSection({ className }: { className?: string }) {
 	return (
@@ -15,7 +14,8 @@ export default function FilterSection({ className }: { className?: string }) {
 					<div className="p-2">
 						<FilterBtn
 							category="All"
-							className="w-full justify-between text-left font-normal text-slate-700 hover:bg-blue-50 hover:text-blue-700 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 inline-flex items-center whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+							variant="ghost"
+							className="w-full justify-between text-left font-normal text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors rounded-md px-4 py-2"
 						>
 							All
 							<ChevronRight className="h-4 w-4" />
@@ -24,7 +24,8 @@ export default function FilterSection({ className }: { className?: string }) {
 							<FilterBtn
 								key={index}
 								category={category}
-								className="w-full justify-between text-left font-normal text-slate-700 hover:bg-blue-50 hover:text-blue-700 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 inline-flex items-center whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+								variant="ghost"
+								className="w-full justify-between text-left font-normal text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors rounded-md px-4 py-2"
 							>
 								{category}
 								<ChevronRight className="h-4 w-4" />

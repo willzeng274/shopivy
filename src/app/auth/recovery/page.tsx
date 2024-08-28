@@ -1,4 +1,4 @@
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/components/ui/AuthInput";
 import Form from "../_components/Form";
 import { handlePasswordReset, handleRecovery } from "../actions";
 import { PrismaClient } from "@prisma/client";

@@ -128,25 +128,25 @@ export default function Screen({ className, children }: ScreenProps) {
 						</div>
 					))}
 				</div>
-				<div className="flex flex-col w-1/3 h-fit rounded-xl bg-slate-100 p-4 text-black gap-4">
+				<div className="flex flex-col w-1/3 h-fit rounded-xl bg-slate-100 p-4 text-black gap-4 max-h-full overflow-y-auto">
 					<h1>Order summary</h1>
 					<div className="flex flex-col [&>*]:border-b-gray-500 [&>*]:border-b text-gray-500">
-						<div className="flex flex-row justify-between py-2 text-xs">
-							<span>Subtotal</span>
-							<span>{formatter.format(total)}</span>
+						<div className="flex flex-row justify-between py-2 text-xs flex-wrap">
+							<span className="flex-auto">Subtotal</span>
+							<span className="flex-auto text-right">{formatter.format(total)}</span>
 						</div>
-						<div className="flex flex-row justify-between py-2 text-xs">
-							<span>Shipping estimate</span>
-							<span>{formatter.format(5)}</span>
+						<div className="flex flex-row justify-between py-2 text-xs flex-wrap">
+							<span className="flex-auto">Shipping estimate</span>
+							<span className="flex-auto text-right">{formatter.format(5)}</span>
 						</div>
-						<div className="flex flex-row justify-between py-2 text-xs">
-							<span>Tax estimate</span>
-							<span>{formatter.format(total * 0.13)}</span>
+						<div className="flex flex-row justify-between py-2 text-xs flex-wrap">
+							<span className="flex-auto">Tax estimate</span>
+							<span className="flex-auto text-right">{formatter.format(total * 0.13)}</span>
 						</div>
 					</div>
-					<div className="flex flex-row justify-between text-sm">
-						<span>Order total</span>
-						<span>{formatter.format(total * 1.13)}</span>
+					<div className="flex flex-row justify-between text-sm flex-wrap">
+						<span className="flex-auto">Order total</span>
+						<span className="flex-auto text-right">{formatter.format(total * 1.13)}</span>
 					</div>
 					<button className="w-full py-1 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
 						Checkout
