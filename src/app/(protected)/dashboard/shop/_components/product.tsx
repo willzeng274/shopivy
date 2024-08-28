@@ -14,9 +14,9 @@ export default function Product({ product, id }: { product: Item & { rating: str
 	const addToCartWithProduct = addToCart.bind(null, id).bind(null, product);
 	return (
 		<div className={`bg-white rounded-lg p-4 ${view === "grid" ? "" : "flex gap-4"}`}>
-			<Link href={`/dashboard/shop/item/${product.id}`} className="w-full h-40">
+			<Link href={`/dashboard/shop/item/${product.id}`}>
 				<Image
-					className={`${view === "grid" ? "w-40 h-40" : "w-40 h-40"} rounded-md`}
+					className={`${view === "grid" ? "w-full h-40" : "w-40 h-40"} rounded-md`}
 					width={80}
 					height={80}
 					src="/goose_plush.jpg"
