@@ -25,7 +25,7 @@ export async function List() {
 					<div key={index} className="bg-white rounded-lg shadow p-4 flex justify-between items-center">
 						<div>
 							<h4 className="font-semibold text-gray-800">{item.name}</h4>
-							<p className="text-sm text-gray-500">Purchased on {console.log("ordered", item)}{item.orderedAt?.toISOString().split("T")[0]}</p>
+							<p className="text-sm text-gray-500">Purchased on {item.orderedAt?.toISOString().split("T")[0]}</p>
 						</div>
 						<p className="font-semibold text-green-600">{formatter.format(item.price / 100)}</p>
 					</div>

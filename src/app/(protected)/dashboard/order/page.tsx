@@ -64,9 +64,9 @@ export default async function Page() {
 		return Array.from(ordersMap.values());
 	};
 
-	const orders = transformOrders(rawOrders);
+	const orders: any[] = transformOrders(rawOrders);
 
-	console.log(orders);
+	// console.log(orders);
 
 	return (
 		<ScrollArea className="w-full flex-1">
@@ -85,7 +85,7 @@ export default async function Page() {
 													<p className="text-sm text-gray-500">Placed on {order.date}</p>
 												</div>
 												<div className="text-right">
-													<p className="font-semibold">${order.orders.reduce((sum, o) => sum + o.price * o.quantity / 100, 0)}</p>
+													<p className="font-semibold">${order.orders.reduce((sum: any, o: any) => sum + o.price * o.quantity / 100, 0)}</p>
 													<p
 														className={`text-sm ${
 															order.status === "Delivered"
@@ -102,7 +102,7 @@ export default async function Page() {
 										</AccordionTrigger>
 										<AccordionContent className="bg-white rounded-b-lg p-4 border-t">
 											<ul className="space-y-4">
-												{order.orders.map((item) => (
+												{order.orders.map((item: any) => (
 													<li key={item.id} className="flex justify-between items-center">
 														<div>
 															<h4 className="font-medium">{item.name}</h4>
