@@ -62,9 +62,11 @@ export async function SideNav({ isSheet = false }: { isSheet?: boolean }) {
 			>
 				Order
 			</SideLink>
-			<SideLink isSheet={isSheet} href="/dashboard/customers" icon={<UsersIcon className="h-5 w-5" />}>
-				Customers
-			</SideLink>
+			{user.seller && (
+				<SideLink isSheet={isSheet} href="/dashboard/customers" icon={<UsersIcon className="h-5 w-5" />}>
+					Customers
+				</SideLink>
+			)}
 		</nav>
 	);
 }

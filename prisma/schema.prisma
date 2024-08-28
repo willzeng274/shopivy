@@ -91,6 +91,7 @@ model ItemDetail {
 }
 
 model CartItem {
+  id        BigInt           @id @default(autoincrement())
   user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    BigInt
   Item      Item             @relation(fields: [itemId], references: [id])
@@ -100,9 +101,11 @@ model CartItem {
   createdAt DateTime         @default(now())
   ordered   Boolean
   // if order is TRUE, this must exist
-  OrderItem OrderItem?
+  orderId   String?          @db.String(30)
+  order     Order?           @relation(fields: [orderId], references: [id])
+  orderedAt DateTime?
 
-  @@id([userId, itemId])
+  @@index([userId, itemId])
 }
 
 enum Status {
@@ -114,35 +117,21 @@ enum Status {
 }
 
 model Order {
-  id        String      @id @default(cuid()) @db.String(30)
-  orders    OrderItem[]
+  id        String     @id @default(cuid()) @db.String(30)
+  orders    CartItem[]
   status    Status
   userId    BigInt
-  user      User        @relation(fields: [userId], references: [id])
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-}
-
-model OrderItem {
-  order      Order    @relation(fields: [orderId], references: [id])
-  orderId    String   @db.String(30)
-  cartUserId BigInt
-  cartItemId BigInt
-  cartItem   CartItem @relation(fields: [cartUserId, cartItemId], references: [userId, itemId])
-  createdAt  DateTime @default(now())
-
-  @@id([orderId, cartUserId, cartItemId])
-  // one to one
-  @@unique([cartUserId, cartItemId])
+  user      User       @relation(fields: [userId], references: [id])
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
 
 model CartItemDetail {
   detail       ItemDetail @relation(fields: [itemDetailId], references: [id])
   itemDetailId BigInt
-  cartUserId   BigInt
   cartItemId   BigInt
 
-  cartItem CartItem @relation(fields: [cartUserId, cartItemId], references: [userId, itemId], onDelete: Cascade)
+  cartItem CartItem @relation(fields: [cartItemId], references: [id], onDelete: Cascade)
 
-  @@id([cartUserId, cartItemId])
+  @@id([itemDetailId, cartItemId])
 }

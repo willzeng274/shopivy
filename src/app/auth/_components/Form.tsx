@@ -3,17 +3,18 @@
 import { useAuthStore } from "@/utils/stores/authStore";
 import { User } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import toast from "react-hot-toast";
 import * as NProgress from "nprogress";
+import { FormCtx } from "./frmCtx";
 
 export interface FormResponse {
     zod?: boolean;
 	errors?: unknown;
 	data?: Omit<User, 'password' | 'code'> & { verified: boolean };
 	verified?: boolean;
-	resetEmail?: boolean;
+	toast?: string;
 	reset?: boolean;
 }
 
@@ -29,6 +30,7 @@ export default function Form({
 	action: (prev: FormResponse, formData: FormData) => Promise<FormResponse>;
 }) {
 	const [state, formAction] = useFormState(action, initialState);
+	const [submitted, setSubmitted] = useState<boolean>(false);
 	const login = useAuthStore((state) => state.login);
 	const verify = useAuthStore((state) => state.verify);
 	const router = useRouter();
@@ -52,8 +54,9 @@ export default function Form({
 			verify();
 			router.push('/dashboard');
 		}
-		if (state.resetEmail) {
-			toast.success("Reset password email sent successfully");
+		if (state.toast) {
+			toast.success(state.toast);
+			NProgress.done();
 		}
 		if (state.reset) {
 			toast.success("Password reset successfully");
@@ -62,11 +65,14 @@ export default function Form({
 	}, [state]);
 
 	return (
-		<form action={async function(formData: FormData) {
-			NProgress.start();
-			formAction(formData);
-		}} {...props}>
-			{children}
-		</form>
+		<FormCtx.Provider value={submitted}>
+			<form action={async function(formData: FormData) {
+				NProgress.start();
+				setSubmitted(true);
+				formAction(formData);
+			}} {...props}>
+				{children}
+			</form>
+		</FormCtx.Provider>
 	);
 }

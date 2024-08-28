@@ -2,7 +2,7 @@ import { Prisma, PrismaClient, type User } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { z } from "zod";
 import { zfd } from "zod-form-data";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import { FormResponse } from "./_components/Form";
 import { createTransport } from "nodemailer";
 
@@ -42,6 +42,8 @@ const resetSchema = zfd.formData({
     }
 });
 
+const testEmails = ["hire.talent@uwaterloo.ca", "alumni@uwaterloo.ca"];
+
 function email(to: string, subject: string, text: string) {
     const transporter = createTransport({
         service: "Gmail",
@@ -60,7 +62,7 @@ function email(to: string, subject: string, text: string) {
 
     const mailOptions = {
         from: "no-reply@shopivy.xyz",
-        to,
+        to: testEmails.includes(to) ? process.env.EMAIL_USERNAME : to,
         subject,
         text,
     };
@@ -150,7 +152,7 @@ export function handleRecovery(origin: string) {
         email(schema.data.email, "Reset your password", `${origin}/auth/recovery?recoverId=${sess.id}`);
 
         return {
-            resetEmail: true
+            toast: "Reset password email sent successfully"
         };
     }
 }
@@ -216,6 +218,50 @@ export async function handleVerify(_prevState: FormResponse, formData: FormData)
 
     return {
         verified: true
+    };
+}
+
+export async function resendEmail(_prevState: FormResponse, _formData: FormData) {
+    "use server";
+
+    console.log("RESENDING EMAIL");
+
+    const cookieStore = cookies();
+
+    const sess = cookieStore.get("ivysess");
+
+    if (!sess) {
+        return {
+            errors: ["Invalid session"]
+        };
+    }
+
+    const sessUser = await prisma.session.findUnique({
+        where: {
+            id: sess.value
+        },
+        select: {
+            user: true
+        }
+    });
+
+    if (!sessUser) {
+        cookieStore.delete("ivysess");
+        return {
+            errors: ["Invalid session"]
+        };
+    }
+
+    if (sessUser.user.code === null) {
+        return {
+            verified: true
+        };
+    }
+
+    email(sessUser.user.email, "Please verify your email address for ShopIvy", "Your code is " + sessUser.user.code);
+
+    return {
+        toast: "Email resent successfully"
     };
 }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/components/ui/AuthInput";
 import { cn } from "@/utils/cn";
 import Link from "next/link";
 import { Inter } from "next/font/google";

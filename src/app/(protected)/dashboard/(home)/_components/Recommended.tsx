@@ -30,7 +30,7 @@ export async function List() {
 					<p className="text-sm text-gray-600 mb-2">{formatter.format(item.price / 100)}</p>
 					<div className="flex justify-between items-center">
 						{item.avgRating !== null ? (
-							<span className="text-yellow-500">{"★".repeat(Math.round(item.avgRating))}</span>
+							<span className="text-yellow-500">{"★".repeat(Math.round(item.avgRating))}{"☆".repeat(5-Math.round(item.avgRating))}</span>
 						) : (
 							<span>No reviews.</span>
 						)}

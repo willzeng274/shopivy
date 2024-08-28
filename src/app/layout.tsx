@@ -27,6 +27,7 @@ export default function RootLayout({
 				<NextTopLoader />
 				{/* <ClientTest /> */}
 				{children}
+				<div id="modal-root" />
 			</body>
 		</html>
 	);

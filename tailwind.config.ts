@@ -27,7 +27,7 @@ const config = {
         gradient: "gradient 8s linear infinite",
         "spin-around": "spin-around calc(var(--speed) * 2) infinite linear",
         slide: "slide var(--speed) ease-in-out infinite alternate",
-        shimmer: "shimmer 2s linear infinite",
+        shimmer: "shimmer 4s linear infinite",
         ellipsis: "ellipsis steps(1, end) 2s infinite",
       },
       keyframes: {
@@ -64,11 +64,17 @@ const config = {
           },
         },
         shimmer: {
-          from: {
+          '0%': {
+            "backgroundPosition": "-100% 0"
+          },
+          '25%': {
             "backgroundPosition": "0 0"
           },
-          to: {
+          '75%': {
             "backgroundPosition": "-200% 0"
+          },
+          '100%': {
+            "backgroundPosition": "-300% 0"
           }
         },
         ellipsis: {

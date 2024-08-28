@@ -1,19 +1,23 @@
-import FilterSection from "./_components/filter";
-import LayoutBtn from "./_components/LayoutBtn";
+import FilterSection from "./filter";
+import LayoutBtn from "./LayoutBtn";
 import { ScrollArea } from "@/components/ui/ScrollArea";
-import Products from "./_components/products";
+import Products from "./products";
 import { Item, Prisma, PrismaClient } from "@prisma/client";
+import { fetchUserFromSess } from "@/utils/state";
 
 const prisma = new PrismaClient({
 	log: ["query", "info", "warn", "error"],
 });
 
 export default async function Page() {
-	const products = (await prisma.$queryRaw<(Item & { rating: number | null })[]>(
+	const user = await fetchUserFromSess();
+	
+	const products = (await prisma.$queryRaw<(Item & { rating: number | null, reviews: bigint })[]>(
 		Prisma.sql`
 			SELECT 
 				i.*,
-				AVG(rv.rating) AS "rating"
+				AVG(rv.rating) AS "rating",
+				COUNT(DISTINCT rv."itemId" || '-' || rv."authorId") AS "reviews"
 			FROM 
 				"Item" i
 			LEFT JOIN
@@ -24,7 +28,7 @@ export default async function Page() {
 	)).map((i) => ({...i, rating: i.rating === null ? null : String(Math.round(i.rating * 100) / 100)}));
 	// console.log("fetched products", products);
 	return (
-		<div className="flex-1">
+		<div className="flex-1 grid">
 			<main className="flex flex-col w-full p-6 pb-0 bg-gradient-to-br from-slate-100 to-zinc-100 min-h-full">
 				<div className="flex justify-between items-center mb-6">
 					<h2 className="text-2xl font-semibold text-gray-800">Shop Student Essentials</h2>
@@ -34,8 +38,8 @@ export default async function Page() {
 				<div className="flex flex-col md:flex-row gap-6 flex-1 relative">
 					<FilterSection className="hidden md:block" />
 					<div className="flex-1">
-						<ScrollArea className="h-full">
-							<Products products={products} />
+						<ScrollArea className="h-full [&>:first-of-type]:w-[calc(100%-0.5rem)] w-[calc(100%+0.5rem)]">
+							<Products products={products} id={user.id} />
 						</ScrollArea>
 					</div>
 				</div>
