@@ -6,6 +6,7 @@ import { createOrder } from "../actions";
 import { useAuthStore } from "@/utils/stores/authStore";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { useUser } from "@/utils/stores/userCtx";
 
 export default function CheckoutForm({
     items,
@@ -16,14 +17,13 @@ export default function CheckoutForm({
 }) {
     const cartChecked = useCheckStore((state) => state.cartChecked);
     const allChecked = useCheckStore((state) => state.allChecked);
-    const user = useAuthStore((state) => state.user);
+    const user = useUser();
     const router = useRouter();
 
     const selectedItems = useMemo(() => allChecked ? items : items.filter((i) => cartChecked[i.id.toString()]), [cartChecked, allChecked]);
 	return (
 		<form
 			action={async function () {
-                if (!user) return;
                 if (!selectedItems.length) {
                     toast.error("Please select at least one item");
                     return;

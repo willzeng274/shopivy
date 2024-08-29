@@ -1,11 +1,8 @@
 "use server";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { createId } from '@paralleldrive/cuid2';
 import { revalidatePath } from "next/cache";
-
-const prisma = new PrismaClient({
-    log: ['query', 'info', 'warn', 'error']
-});
+import { prisma } from "@/utils/state";
 
 export async function decrementAction(cartItemId: bigint, curr: number): Promise<number> {
     if (curr <= 1) return 1;

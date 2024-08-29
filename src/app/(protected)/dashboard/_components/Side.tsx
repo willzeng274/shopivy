@@ -15,7 +15,7 @@ export default async function Side() {
 export async function SideNav({ isSheet = false }: { isSheet?: boolean }) {
 	const user = await fetchUserFromSess();
 	const cartItemCount = await countCartItems(user.id);
-	const orderItemCount: number = await countOrderItems(user.id);
+	const orderItemCount = await countOrderItems(user.id);
 	return (
 		<nav className={cn("grid gap-4 mt-4 [&>*]:pl-3", isSheet ? "text-lg" : "text-sm")}>
 			<div className="flex items-center gap-2 rounded-md py-2 text-card-foreground">

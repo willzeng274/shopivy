@@ -7,7 +7,7 @@ import RangeSelect from "./_components/range";
 
 export default function FilterSection({ className }: { className?: string }) {
 	return (
-		<aside className={cn("w-full md:w-64 space-y-6", className)}>
+		<aside className={cn("w-full min-w-48 md:w-64 space-y-6", className)}>
 			<div className="bg-white rounded-lg shadow-md overflow-hidden">
 				<h3 className="text-lg font-semibold text-gray-700 p-4 bg-indigo-50">Categories</h3>
 				<ScrollArea className="h-64 w-full">

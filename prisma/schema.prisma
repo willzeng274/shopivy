@@ -71,6 +71,7 @@ enum Category {
 model Item {
   id          BigInt       @id @default(autoincrement())
   name        String
+  description String       @default("")
   imageUrl    String       @db.String(255)
   price       Int
   category    Category     @default(Other)

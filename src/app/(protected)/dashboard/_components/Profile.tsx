@@ -9,13 +9,9 @@ import {
 import { UserIcon } from "lucide-react";
 import Form from "./Form";
 import { cookies } from "next/headers";
-import { PrismaClient } from "@prisma/client";
 import { permanentRedirect } from "next/navigation";
 import Link from "next/link";
-
-const prisma = new PrismaClient({
-    log: ['query', 'info', 'warn', 'error'],
-});
+import { prisma } from "@/utils/state";
 
 export default function Profile() {
 	async function handleLogout() {

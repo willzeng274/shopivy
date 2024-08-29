@@ -2,14 +2,31 @@
 
 import { useMemo } from "react";
 import { useCheckStore } from "../chkStore";
+import { useQuantStore } from "../quantStore";
 
-export default function Total({ items }: { items: { price: number, quantity: number, id: bigint, itemId: bigint }[] }) {
-    const cartChecked = useCheckStore((state) => state.cartChecked);
-    const allChecked = useCheckStore((state) => state.allChecked);
+export default function Total({ items }: { items: { price: number; quantity: number; id: bigint; itemId: bigint }[] }) {
+	const cartChecked = useCheckStore((state) => state.cartChecked);
+	const allChecked = useCheckStore((state) => state.allChecked);
+	const quant = useQuantStore((state) => state.item);
 
-    const subtotal = useMemo(() => items.reduce((sum, item) => allChecked ? (sum + (item.price * item.quantity) / 100) : (cartChecked[item.id.toString()] ? (sum + (item.price * item.quantity) / 100) : sum), 0), [items, cartChecked, allChecked]);
-    const tax = useMemo(() => subtotal * 0.13, [subtotal]);
-    const total = useMemo(() => subtotal + tax, [subtotal, tax]);
+	const subtotal = useMemo(() => {
+		return items.reduce((sum, item) => {
+			// console.log("reducing", item.id, quant, quant[item.id.toString()]);
+			if (allChecked) {
+				const itemQuantity = quant[item.id.toString()] ? quant[item.id.toString()] : item.quantity;
+				return sum + (item.price * itemQuantity) / 100;
+			} else {
+				if (cartChecked[item.id.toString()]) {
+					const itemQuantity = quant[item.id.toString()] ? quant[item.id.toString()] : item.quantity;
+					return sum + (item.price * itemQuantity) / 100;
+				} else {
+					return sum;
+				}
+			}
+		}, 0);
+	}, [items, quant, cartChecked, allChecked]);
+	const tax = useMemo(() => subtotal * 0.13, [subtotal]);
+	const total = useMemo(() => subtotal + tax, [subtotal, tax]);
 
 	return (
 		<div className="space-y-2 mb-4">

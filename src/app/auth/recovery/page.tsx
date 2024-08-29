@@ -1,15 +1,10 @@
 import { Input } from "@/components/ui/AuthInput";
 import Form from "../_components/Form";
 import { handlePasswordReset, handleRecovery } from "../actions";
-import { PrismaClient } from "@prisma/client";
-import { permanentRedirect } from "next/navigation";
 import FormBtn from "../_components/FormBtn";
 import { cn } from "@/utils/cn";
 import { headers } from "next/headers";
-
-const prisma = new PrismaClient({
-	log: ["query", "info", "warn", "error"],
-});
+import { prisma } from "@/utils/state";
 
 export default async function Recovery({ searchParams }: { searchParams: { recoverId?: string } }) {
     const headerList = headers();

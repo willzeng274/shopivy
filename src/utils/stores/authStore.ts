@@ -2,7 +2,7 @@ import { User } from '@prisma/client';
 import { create } from 'zustand';
 import { devtools, persist, PersistStorage } from 'zustand/middleware';
 
-type UserClient = Omit<User, 'password' | 'code'> & { verified: boolean };
+export type UserClient = Omit<User, 'password' | 'code'> & { verified: boolean };
 
 export interface AuthState {
     user: UserClient | null;

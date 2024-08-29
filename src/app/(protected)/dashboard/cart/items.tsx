@@ -39,7 +39,7 @@ export default async function Items() {
 									className="w-36 m-2 h-auto aspect-square self-center rounded-md flex-shrink-0"
 									width={80}
 									height={80}
-									src="/goose_plush.jpg"
+									src={item.imageUrl ? item.imageUrl : "/goose_plush.jpg"}
 									alt="product-image"
 									blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAACCAYAAAB/qH1jAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAJ0lEQVR4nGPY2fXjv458/H9Bbtf/IDbD/7v//8/Mvfq/J+nEfxAbAF3NFsFiuaE1AAAAAElFTkSuQmCC"
 									placeholder="blur"

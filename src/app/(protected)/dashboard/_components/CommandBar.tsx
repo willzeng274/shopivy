@@ -18,7 +18,7 @@ export default function CommandBar() {
 	return (
 		<div className="relative">
 			<Command className="rounded-lg border w-full">
-				<CommandInput className="min-w-[calc(23ch)]" placeholder="Type a command or search..." />
+				<CommandInput className="min-w-[calc(12ch)] sm:min-w-[calc(25ch)]" placeholder="Type a command (*) or search..." />
 				<CommandListWrapper />
 			</Command>
 		</div>

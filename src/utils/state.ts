@@ -4,12 +4,12 @@ import { cookies } from "next/headers";
 import { permanentRedirect } from "next/navigation";
 // import { unstable_cache } from "next/cache";
 
-const prisma = new PrismaClient({
-    log: ['query', 'info', 'warn', 'error'],
+export const prisma = new PrismaClient({
+    // log: ['query', 'info', 'warn', 'error'],
 });
 
 // MUST be called on the server.
-// Only called once throughout the app's lifetime
+// Only called once per request
 export const fetchUserFromSess = cache(async () => {
     console.log("FETCHING USER FROM SESSION...");
     const cookieStore = cookies();
@@ -96,7 +96,7 @@ interface Purchase extends Item {
     orderedAt: CartItem["orderedAt"];
 }
 
-export const getPurchases = async (id: bigint) => await prisma.$queryRaw<Purchase[]>(
+export const getPurchases = cache(async (id: bigint) => await prisma.$queryRaw<Purchase[]>(
     Prisma.sql`
         WITH "ordered_cart_items" AS (
             SELECT 
@@ -118,28 +118,92 @@ export const getPurchases = async (id: bigint) => await prisma.$queryRaw<Purchas
             "orderedAt" DESC
         LIMIT 3;
     `
-);
+));
 
-export const getOrders = async (id: bigint) => await prisma.$queryRaw<Purchase[]>(
-    Prisma.sql`
-        WITH "ordered_cart_items" AS (
-            SELECT 
-                i.*,
-                ci."orderedAt",
-                ci."orderId"
-            FROM 
-                "CartItem" ci
-            JOIN 
-                "Item" i ON i."id" = ci."itemId"
-            WHERE 
-                ci."userId" = ${id}
-        )
-        SELECT 
-            *
-        FROM 
-            "ordered_cart_items"
-    `
-);
+interface RawOrder {
+    id: string;
+    status: string;
+    userId: bigint;
+    createdAt: Date,
+    updatedAt: Date,
+    cartItemId: bigint,
+    cartItemQuantity: number,
+    cartItemOrdered: boolean;
+    itemId: bigint;
+    itemName: string;
+    itemPrice: number;
+}
+
+interface Order {
+    id: string;
+    status: string;
+    createdAt: Date;
+    updatedAt: Date;
+    cartItemQuantity: number;
+    cartItemOrdered: boolean;
+    orders: {
+        id: bigint,
+        itemId: bigint,
+        name: string,
+        price: number,
+        quantity: number,
+        ordered: boolean,
+    }[];
+}
+
+export const getOrders = async (id: bigint) => {
+    const rawOrders = await prisma.$queryRaw<RawOrder[]>(
+        Prisma.sql`
+			SELECT 
+				o.id,
+				o.status,
+				o."userId",
+				o."createdAt",
+				o."updatedAt",
+				ci.id AS "cartItemId",
+				ci.quantity AS "cartItemQuantity",
+				ci.ordered AS "cartItemOrdered",
+				i.id AS "itemId",
+				i.name AS "itemName",
+				i.price AS "itemPrice"
+			FROM public."Order" o
+			LEFT JOIN public."CartItem" ci ON o.id = ci."orderId" AND ordered = TRUE
+			LEFT JOIN public."Item" i ON ci."itemId" = i.id
+			WHERE o."userId" = ${id};
+		`
+    );
+
+    const transformOrders = (data: RawOrder[]) => {
+        const ordersMap = new Map<string, Order>();
+
+        data.forEach((row) => {
+            const { id, userId, cartItemId, itemId, itemName, itemPrice, ...orderData } = row;
+
+            if (!ordersMap.has(id)) {
+                ordersMap.set(id, {
+                    ...orderData,
+                    id,
+                    orders: [],
+                });
+            }
+
+            if (cartItemId) {
+                ordersMap.get(id)!.orders.push({
+                    id: cartItemId,
+                    itemId,
+                    name: itemName,
+                    price: itemPrice,
+                    quantity: row.cartItemQuantity,
+                    ordered: row.cartItemOrdered,
+                });
+            }
+        });
+
+        return Array.from(ordersMap.values());
+    };
+
+    return transformOrders(rawOrders);
+};
 
 export interface CartItemFormat {
     id: bigint;

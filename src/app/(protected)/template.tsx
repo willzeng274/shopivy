@@ -12,15 +12,14 @@ export default async function Template({
     // await new Promise((resolve) => setTimeout(resolve, 1000));
     
 	return (
-        <>
-            <SaveUser user={{
-                id: user.id,
-                email: user.email,
-                name: user.name,
-                seller: user.seller,
-                verified: user.code === null
-            }} />
+        <SaveUser user={{
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            seller: user.seller,
+            verified: user.code === null
+        }}>
             {children}
-        </>
+        </SaveUser>
     );
 }

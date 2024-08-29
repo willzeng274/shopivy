@@ -1,12 +1,9 @@
 "use server";
 
-import { CartItem, Item, Prisma, PrismaClient } from "@prisma/client";
+import { CartItem, Item, Prisma } from "@prisma/client";
 import { FormResponse } from "./_components/Form";
 import { revalidatePath } from "next/cache";
-
-const prisma = new PrismaClient({
-    log: ['query', 'info', 'warn', 'error']
-});
+import { prisma } from "@/utils/state";
 
 export async function addToCart(id: bigint, product: Item & { rating: string | null }, _prevState: FormResponse, _formData: FormData) {
     const items: CartItem = await prisma.$transaction(async (prisma) => {

@@ -1,17 +1,16 @@
 "use client";
 
-import { useAuthStore } from "@/utils/stores/authStore";
 import { deleteAction } from "../actions";
 import { CartItemFormat } from "@/utils/state";
 import { Button } from "@/components/ui/Button";
 import { TrashIcon } from "lucide-react";
+// import { useUser } from "@/utils/stores/userCtx";
 
 export default function DeleteButton({ item }: { item: CartItemFormat }) {
-	const user = useAuthStore((state) => state.user);
+	// const user = useUser();
 	return (
 		<form
 			action={async function () {
-				if (!user) return;
 				await deleteAction(item.id);
                 // tbh there probably isn't a better way to do this...
                 document.getElementById(`cart-item-${item.itemId}`)?.remove();

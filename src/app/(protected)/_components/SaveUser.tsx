@@ -1,11 +1,12 @@
 "use client";
 
 import { useAuthStore } from "@/utils/stores/authStore";
+import { UserCtx } from "@/utils/stores/userCtx";
 import { User } from "@prisma/client";
 import React, { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 
-const SaveUser = React.memo(function Comp({ user }: { user: Omit<User, "password" | "code"> & { verified: boolean } }) {
+const SaveUser = React.memo(function Comp({ user, children }: { user: Omit<User, "password" | "code"> & { verified: boolean }, children: React.ReactNode }) {
 	const login = useAuthStore((state) => state.login);
 	login(user);
 	
@@ -30,7 +31,9 @@ const SaveUser = React.memo(function Comp({ user }: { user: Omit<User, "password
 		};
 	}, []);
 
-	return <></>;
+	return <UserCtx.Provider value={user}>
+		{children}
+	</UserCtx.Provider>;
 });
 
 export default SaveUser;

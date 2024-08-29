@@ -1,16 +1,13 @@
-import { Prisma, PrismaClient, type User } from "@prisma/client";
+import { Prisma, type User } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { z } from "zod";
 import { zfd } from "zod-form-data";
 import { cookies } from "next/headers";
 import { FormResponse } from "./_components/Form";
 import { createTransport } from "nodemailer";
+import { prisma } from "@/utils/state";
 
 const saltRounds = 12;
-
-const prisma = new PrismaClient({
-    log: ['query', 'info', 'warn', 'error'],
-});
 
 const loginSchema = zfd.formData({
     email: zfd.text(z.string().email()),

@@ -1,70 +1,14 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/Accordion";
 import { Button } from "@/components/ui/Button";
 import { ScrollArea } from "@/components/ui/ScrollArea";
-import { fetchUserFromSess } from "@/utils/state";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { fetchUserFromSess, getOrders } from "@/utils/state";
 import Link from "next/link";
 import React from "react";
 
-const prisma = new PrismaClient({
-	log: ["query", "info", "warn", "error"],
-});
-
 export default async function Page() {
 	const user = await fetchUserFromSess();
-	const rawOrders = await prisma.$queryRaw<any[]>(
-		Prisma.sql`
-			SELECT 
-				o.id,
-				o.status,
-				o."userId",
-				o."createdAt",
-				o."updatedAt",
-				ci.id AS "cartItemId",
-				ci.quantity AS "cartItemQuantity",
-				ci.ordered AS "cartItemOrdered",
-				i.id AS "itemId",
-				i.name AS "itemName",
-				i.price AS "itemPrice"
-			FROM public."Order" o
-			LEFT JOIN public."CartItem" ci ON o.id = ci."orderId" AND ordered = true
-			LEFT JOIN public."Item" i ON ci."itemId" = i.id
-			WHERE o."userId" = ${user.id};
-		`
-	);
-
-	console.log("raw", rawOrders);
-
-	const transformOrders = (data: any[]) => {
-		const ordersMap = new Map<string, any>();
-
-		data.forEach((row) => {
-			const { id, userId, cartItemId, itemId, itemName, itemPrice, ...orderData } = row;
-
-			if (!ordersMap.has(id)) {
-				ordersMap.set(id, {
-					...orderData,
-					id,
-					orders: [],
-				});
-			}
-
-			if (cartItemId) {
-				ordersMap.get(id).orders.push({
-					id: cartItemId,
-					itemId,
-					name: itemName,
-					price: itemPrice,
-					quantity: row.cartItemQuantity,
-					ordered: row.cartItemOrdered,
-				});
-			}
-		});
-
-		return Array.from(ordersMap.values());
-	};
-
-	const orders: any[] = transformOrders(rawOrders);
+	
+	const orders = await getOrders(user.id);
 
 	// console.log(orders);
 
@@ -82,7 +26,7 @@ export default async function Page() {
 											<div className="flex justify-between items-center w-full">
 												<div className="text-left">
 													<h3 className="font-semibold">Order #{order.id}</h3>
-													<p className="text-sm text-gray-500">Placed on {order.date}</p>
+													<p className="text-sm text-gray-500">Placed on {order.createdAt.toString()}</p>
 												</div>
 												<div className="text-right">
 													<p className="font-semibold">${order.orders.reduce((sum: any, o: any) => sum + o.price * o.quantity / 100, 0)}</p>
