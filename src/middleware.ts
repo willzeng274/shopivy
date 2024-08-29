@@ -13,7 +13,7 @@ export function middleware(request: NextRequest) {
   headers.set("x-current-origin", request.nextUrl.origin);
   if (cookies().get("ivysess") && authPages.includes(request.nextUrl.pathname)) {
     return NextResponse.redirect(new URL('/dashboard', request.url));
-  } else if (!cookies().get("ivysess") && gatedPages.includes(request.nextUrl.pathname)) {
+  } else if (!cookies().get("ivysess") && (gatedPages.includes(request.nextUrl.pathname) || request.nextUrl.pathname.startsWith("/dashboard"))) {
     return NextResponse.redirect(new URL('/auth/login', request.url));
   }
   return NextResponse.next({ headers });

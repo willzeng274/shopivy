@@ -1,6 +1,8 @@
 import { Skeleton } from "@/components/ui/Skeleton";
 import { formatter } from "@/utils/formatter";
-import { getTrendingItems } from "@/utils/state";
+import { fetchUserFromSess, getTrendingItems } from "@/utils/state";
+import { addToCart } from "../../shop/actions";
+import Form from "./Form";
 
 const Recommended = {
 	Loading,
@@ -12,9 +14,8 @@ export default Recommended;
 export async function List() {
 	// await new Promise((resolve) => setTimeout(resolve, 8000));
 
+	const user = await fetchUserFromSess();
 	const trending = await getTrendingItems();
-
-	// console.log("trending", trending);
 
 	return (
 		<>
@@ -30,13 +31,22 @@ export async function List() {
 					<p className="text-sm text-gray-600 mb-2">{formatter.format(item.price / 100)}</p>
 					<div className="flex justify-between items-center">
 						{item.avgRating !== null ? (
-							<span className="text-yellow-500">{"★".repeat(Math.round(item.avgRating))}{"☆".repeat(5-Math.round(item.avgRating))}</span>
+							<span className="text-yellow-500">
+								{"★".repeat(Math.round(item.avgRating))}
+								{"☆".repeat(5 - Math.round(item.avgRating))}
+							</span>
 						) : (
 							<span>No reviews.</span>
 						)}
-						<button className="bg-purple-600 hover:bg-purple-700 text-white h-10 px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-							Add to Cart
-						</button>
+						<Form action={addToCart.bind(null, user.id).bind(null, item)}>
+							<button
+								disabled={!item.available}
+								className="bg-blue-600 hover:bg-blue-700 text-white h-10 px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+								type="submit"
+							>
+								Add to Cart
+							</button>
+						</Form>
 					</div>
 				</div>
 			))}

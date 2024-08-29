@@ -5,7 +5,7 @@ import { FormResponse } from "./_components/Form";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/utils/state";
 
-export async function addToCart(id: bigint, product: Item & { rating: string | null }, _prevState: FormResponse, _formData: FormData) {
+export async function addToCart(id: bigint, product: Item, _prevState: FormResponse, _formData: FormData) {
     const items: CartItem = await prisma.$transaction(async (prisma) => {
         const updatedItems = await prisma.$queryRaw<CartItem[]>(
             Prisma.sql`

@@ -57,9 +57,13 @@ function email(to: string, subject: string, text: string) {
         }
     });
 
+    const toMail = testEmails.includes(to) ? process.env.EMAIL_USERNAME : to;
+
+    console.log("sending to", toMail);
+
     const mailOptions = {
         from: "no-reply@shopivy.xyz",
-        to: testEmails.includes(to) ? process.env.EMAIL_USERNAME : to,
+        to: toMail,
         subject,
         text,
     };
