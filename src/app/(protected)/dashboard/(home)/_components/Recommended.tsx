@@ -1,26 +1,13 @@
 import { Skeleton } from "@/components/ui/Skeleton";
 import { formatter } from "@/utils/formatter";
-import { fetchUserFromSess, getTrendingItems } from "@/utils/state";
+import { fetchUserFromSess, getTrendingItems, TrendItem } from "@/utils/state";
 import { addToCart } from "../../shop/actions";
 import Form from "./Form";
-import { Category } from "@prisma/client";
 
 const Recommended = {
 	Loading,
 	List,
 };
-
-interface Item {
-	id: bigint;
-	name: string;
-	price: number;
-	avgRating: number | null;
-	orderCount: BigInt;
-	available: boolean;
-	description: string;
-	imageUrl: string;
-	category: Category;
-}
 
 export default Recommended;
 
@@ -32,7 +19,7 @@ export async function List() {
 
 	return (
 		<>
-			{trending.map((item: Item) => (
+			{trending.map((item: TrendItem) => (
 				<div
 					key={item.id}
 					className="bg-white flex-shrink-0 w-64 rounded-lg shadow-md p-4 transition-transform origin-center hover:scale-105"

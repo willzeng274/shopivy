@@ -28,6 +28,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "1.0.0",
+    "cohere-ai": "^7.15.2",
     "framer-motion": "^11.3.30",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.419.0",

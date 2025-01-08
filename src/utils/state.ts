@@ -60,7 +60,7 @@ export const countOrderItems = async (id: bigint) => await prisma.cartItem.count
     }
 });
 
-interface TrendItem extends Item {
+export interface TrendItem extends Item {
     orderCount: BigInt;
     avgRating: number | null;
 }
@@ -91,9 +91,10 @@ export const getTrendingItems = cache(async () => await prisma.$queryRaw<TrendIt
     `
 ));
 
-interface Purchase extends Item {
+export interface Purchase extends Item {
     orderId: CartItem["orderId"];
     orderedAt: CartItem["orderedAt"];
+    quantity: CartItem["quantity"];
 }
 
 export const getPurchases = cache(async (id: bigint) => await prisma.$queryRaw<Purchase[]>(
