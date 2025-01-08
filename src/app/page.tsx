@@ -70,13 +70,14 @@ export default async function Home() {
 						<div className="flex flex-col items-center justify-center space-y-4 text-center">
 							<div className="space-y-2">
 								<div className="inline-block rounded-lg bg-[#55efc4] px-3 py-1 text-sm text-[#2d3436]">
-									Order Management assisted by Cohere AI
+									Shopping Assistant and Recommendation System with Cohere AI
 								</div>
 								<h2 className="text-3xl font-bold tracking-tighter text-[#2d3436] sm:text-5xl">
-									Personalized Order Management Just For You
+									Personalized Shopping Experience just for you
 								</h2>
 								<p className="max-w-[900px] text-[#2d3436] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-									ShopIvy is ahead in the AI game to provide you a personalized order management system.
+									ShopIvy is ahead in the AI game to provide you a personalized shopping experience. Our AI system
+									learns from your preferences and recommends products that you might like.
 								</p>
 							</div>
 						</div>
@@ -93,26 +94,25 @@ export default async function Home() {
 								<ul className="grid gap-6">
 									<li>
 										<div className="grid gap-1">
-											<h3 className="text-xl font-bold text-[#2d3436]">Track your shipments</h3>
+											<h3 className="text-xl font-bold text-[#2d3436]">Intelligent Product Discovery</h3>
 											<p className="text-[#2d3436]">
-												ShopIvy's AI brings you straight to the shipments and shows you their corresponding status.
+												Shopivy AI learns from your preferences and recommends products that you might like.
 											</p>
 										</div>
 									</li>
 									<li>
 										<div className="grid gap-1">
-											<h3 className="text-xl font-bold text-[#2d3436]">Modify your orders</h3>
+											<h3 className="text-xl font-bold text-[#2d3436]">Smart Cart Optimization</h3>
 											<p className="text-[#2d3436]">
-												Our AI can help you perform actions on an existing order, making order modification
-												intuitive.
+												The AI system makes suggestions on what to add to your cart based on your shopping history.
 											</p>
 										</div>
 									</li>
 									<li>
 										<div className="grid gap-1">
-											<h3 className="text-xl font-bold text-[#2d3436]">User-friendly Return System</h3>
+											<h3 className="text-xl font-bold text-[#2d3436]">Real-Time Shopping Insights</h3>
 											<p className="text-[#2d3436]">
-												Return items with ease, unlike the majority of other e-commerce providers.
+												Stay informed with instant updates on trending products and personalized offers.
 											</p>
 										</div>
 									</li>
@@ -136,54 +136,30 @@ export default async function Home() {
 								</p>
 							</div>
 							<div className="grid grid-cols-2 gap-4">
-								<Link
-									href="#"
-									className="group flex h-auto w-full items-center justify-start gap-1 rounded-md bg-white/10 p-4 text-sm font-medium transition-colors hover:bg-white/20 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-									prefetch={false}
-								>
+								<div className="group flex h-auto w-full items-center justify-start gap-1 rounded-md bg-white/10 p-4 text-sm font-medium transition-colors hover:bg-white/20 hover:cursor-pointer">
 									<PencilIcon className="h-6 w-6 text-white" />
 									<div className="text-sm font-medium leading-none group-hover:underline">School Supplies</div>
-								</Link>
-								<Link
-									href="#"
-									className="group flex h-auto w-full items-center justify-start gap-1 rounded-md bg-white/10 p-4 text-sm font-medium transition-colors hover:bg-white/20 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-									prefetch={false}
-								>
+								</div>
+								<div className="group flex h-auto w-full items-center justify-start gap-1 rounded-md bg-white/10 p-4 text-sm font-medium transition-colors hover:bg-white/20 hover:cursor-pointer">
 									<LaptopIcon className="h-6 w-6 text-white" />
 									<div className="text-sm font-medium leading-none group-hover:underline">Tech Gadgets</div>
-								</Link>
-								<Link
-									href="#"
-									className="group flex h-auto w-full items-center justify-start gap-1 rounded-md bg-white/10 p-4 text-sm font-medium transition-colors hover:bg-white/20 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-									prefetch={false}
-								>
+								</div>
+								<div className="group flex h-auto w-full items-center justify-start gap-1 rounded-md bg-white/10 p-4 text-sm font-medium transition-colors hover:bg-white/20 hover:cursor-pointer">
 									<BookIcon className="h-6 w-6 text-white" />
 									<div className="text-sm font-medium leading-none group-hover:underline">Textbooks</div>
-								</Link>
-								<Link
-									href="#"
-									className="group flex h-auto w-full items-center justify-start gap-1 rounded-md bg-white/10 p-4 text-sm font-medium transition-colors hover:bg-white/20 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-									prefetch={false}
-								>
+								</div>
+								<div className="group flex h-auto w-full items-center justify-start gap-1 rounded-md bg-white/10 p-4 text-sm font-medium transition-colors hover:bg-white/20 hover:cursor-pointer">
 									<BackpackIcon className="h-6 w-6 text-white" />
 									<div className="text-sm font-medium leading-none group-hover:underline">Bags & Accessories</div>
-								</Link>
-								<Link
-									href="#"
-									className="group flex h-auto w-full items-center justify-start gap-1 rounded-md bg-white/10 p-4 text-sm font-medium transition-colors hover:bg-white/20 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-									prefetch={false}
-								>
+								</div>
+								<div className="group flex h-auto w-full items-center justify-start gap-1 rounded-md bg-white/10 p-4 text-sm font-medium transition-colors hover:bg-white/20 hover:cursor-pointer">
 									<FriendsIcon className="h-6 w-6 text-white" />
 									<div className="text-sm font-medium leading-none group-hover:underline">Friends</div>
-								</Link>
-								<Link
-									href="#"
-									className="group flex h-auto w-full items-center justify-start gap-1 rounded-md bg-white/10 p-4 text-sm font-medium transition-colors hover:bg-white/20 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-									prefetch={false}
-								>
+								</div>
+								<div className="group flex h-auto w-full items-center justify-start gap-1 rounded-md bg-white/10 p-4 text-sm font-medium transition-colors hover:bg-white/20 hover:cursor-pointer">
 									<EditingIcon className="h-6 w-6 text-white" />
 									<div className="text-sm font-medium leading-none group-hover:underline">Essay editing</div>
-								</Link>
+								</div>
 							</div>
 						</div>
 						{/* <div className="flex justify-center">

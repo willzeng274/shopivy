@@ -11,8 +11,9 @@ import {
 	CommandShortcut,
 } from "@/components/ui/Command";
 import { cn } from "@/utils/cn";
+import { usePopupStore } from "@/utils/stores/popupStore";
 import { useCommandState } from "cmdk";
-import { Calendar, Smile, Calculator, User, CreditCard, Settings } from "lucide-react";
+import { Calendar, Calculator, User, CreditCard, Settings } from "lucide-react";
 
 export default function CommandBar() {
 	return (
@@ -27,6 +28,7 @@ export default function CommandBar() {
 
 function CommandListWrapper() {
 	const search = useCommandState((state) => state.search);
+	const show = usePopupStore((state) => state.show);
 	return (
 		<div
 			className={cn("absolute w-full top-full left-0 z-50 bg-white rounded-lg border", {
@@ -37,7 +39,7 @@ function CommandListWrapper() {
 			<CommandList hidden={search === ""}>
 				<CommandEmpty>No results found.</CommandEmpty>
 				<CommandGroup heading="Suggestions">
-					<CommandItem>
+					<CommandItem onSelect={show}>
 						<svg className="mr-2 h-4 w-4" viewBox="0 0 75 75" xmlns="http://www.w3.org/2000/svg">
 							<path
 								d="M24.3 44.7c2 0 6-.1 11.6-2.4 6.5-2.7 19.3-7.5 28.6-12.5 6.5-3.5 9.3-8.1 9.3-14.3C73.8 7 66.9 0 58.3 0h-36C10 0 0 10 0 22.3s9.4 22.4 24.3 22.4z"
@@ -56,16 +58,16 @@ function CommandListWrapper() {
 								fill="#ff7759"
 							/>
 						</svg>
-						<span>AI Assistant (WIP)</span>
+						<span>AI Assistant</span>
 					</CommandItem>
 					<CommandItem>
 						<Calendar className="mr-2 h-4 w-4" />
 						<span>Calendar</span>
 					</CommandItem>
-					<CommandItem>
+					{/* <CommandItem>
 						<Smile className="mr-2 h-4 w-4" />
 						<span>Search Emoji</span>
-					</CommandItem>
+					</CommandItem> */}
 					<CommandItem disabled>
 						<Calculator className="mr-2 h-4 w-4" />
 						<span>Calculator</span>

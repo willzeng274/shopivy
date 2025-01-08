@@ -6,6 +6,17 @@ import Recommended from "./_components/Recommended";
 import { ScrollArea } from "@/components/ui/ScrollArea";
 // import { permanentRedirect } from "next/navigation";
 
+const getSeasonalSale = () => {
+	const month = new Date().getMonth();
+	if (month >= 0 && month <= 3) {
+		return "Winter Sale!";
+	} else if (month >= 4 && month <= 7) {
+		return "Summer Sale!";
+	} else {
+		return "Fall Sale!";
+	}
+};
+
 export default async function Page() {
 	const user = await fetchUserFromSess();
 
@@ -17,7 +28,7 @@ export default async function Page() {
 				<section className="mb-8 space-y-4">
 					<h3 className="text-xl font-semibold text-gray-700">Featured Deals</h3>
 					<div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg shadow-lg p-6 text-white">
-						<h4 className="text-2xl font-bold mb-2">Summer Sale!</h4>
+						<h4 className="text-2xl font-bold mb-2">{getSeasonalSale()}</h4>
 						<p className="mb-4">Get 20% off on all textbooks and study materials.</p>
 						<Link
 							href="/dashboard/shop"
@@ -28,7 +39,7 @@ export default async function Page() {
 					</div>
 					<div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-lg p-6 text-white">
 						<h4 className="text-2xl font-bold mb-2">Student Success Sale!</h4>
-						<p className="mb-4">Gear up for the new semester with amazing discounts on all student essentials.</p>
+						<p className="mb-4">Gear up for the new term with amazing discounts on all student essentials.</p>
 						<Link
 							href="/dashboard/shop"
 							className="bg-white text-purple-600 hover:bg-gray-100 h-10 px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"

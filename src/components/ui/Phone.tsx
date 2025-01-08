@@ -43,11 +43,11 @@ const cardItems = [
 		title: "Artificial General Intelligence",
 		description: "AGI at your service! ($4999.99 per API call)",
 	},
-    {
+	{
 		id: 6,
-        title: "Test",
-        description: "Test1"
-    },
+		title: "Artificial Super Intelligence",
+		description: "World's first ASI service. It will cost you your life.",
+	},
 ];
 
 export interface PhoneProps extends React.ButtonHTMLAttributes<HTMLDivElement> {
@@ -97,9 +97,9 @@ export default function Phone({ className, children }: PhoneProps) {
 					</svg>
 				</button>
 			</div>
-            <div className="overflow-y-auto flex-1">
-			    <HoverCard className="text-[length:0.6rem]" items={cardItems} />
-            </div>
+			<div className="overflow-y-auto flex-1">
+				<HoverCard className="text-[length:0.6rem]" items={cardItems} />
+			</div>
 			{/* <div className="text-2xl">
                 Test
             </div> */}
