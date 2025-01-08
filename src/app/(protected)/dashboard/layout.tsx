@@ -4,6 +4,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/Sheet";
 import Notifications from "./_components/Notifications";
 import Profile from "./_components/Profile";
 import CommandBar from "./_components/CommandBar";
+import AIDialog from "./_components/AIDialog";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
 	return (
@@ -40,6 +41,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 				</header>
 				{children}
 			</div>
+			<AIDialog />
 		</div>
 	);
 }

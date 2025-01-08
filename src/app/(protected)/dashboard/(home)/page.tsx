@@ -4,7 +4,6 @@ import Recent from "./_components/Recent";
 import { Suspense } from "react";
 import Recommended from "./_components/Recommended";
 import { ScrollArea } from "@/components/ui/ScrollArea";
-import AIDialog from "./_components/AIDialog";
 // import { permanentRedirect } from "next/navigation";
 
 const getSeasonalSale = () => {
@@ -73,8 +72,6 @@ export default async function Page() {
 						</div>
 					</Suspense>
 				</section>
-
-				<AIDialog />
 			</main>
 		</ScrollArea>
 	);
